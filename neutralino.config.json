@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
+  "applicationId": "com.devdrill.desktop",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 28419,
+  "documentRoot": "/dist/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "logging": {
+    "enabled": false
+  },
+  "nativeBlockList": [],
+  "applicationIcon": "dist/icon.png",
+  "modes": {
+    "window": {
+      "title": "DevDrill • Offline LeetCode & Codeforces Runner",
+      "width": 1280,
+      "height": 820,
+      "minWidth": 900,
+      "minHeight": 600,
+      "center": true,
+      "icon": "dist/icon.png",
+      "enableInspector": false,
+      "borderless": true
+    }
+  },
+  "cli": {
+    "binaryName": "DevDrill",
+    "resourcesPath": "/dist/",
+    "extensionsPath": "/extensions/",
+    "clientLibrary": "/dist/neutralino.js",
+    "binaryVersion": "5.3.0",
+    "clientVersion": "5.3.0"
+  }
+}

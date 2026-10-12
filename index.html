@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevDrill • Practice LeetCode & Codeforces Offline</title>
+    <script>
+      (function() {
+        var t = localStorage.getItem('offcode_theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      })();
+    </script>
+    <!-- Neutralino client library -->
+    <script src="/neutralino.js"></script>
+    <script>
+      if (typeof window !== 'undefined' && window.Neutralino) {
+        try {
+          window.Neutralino.init();
+        } catch (e) {
+          console.debug('Neutralino init:', e);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

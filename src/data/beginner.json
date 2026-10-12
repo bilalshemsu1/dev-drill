@@ -1,0 +1,1289 @@
+[
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "description": "<p>Given an array of integers <code>nums</code>&nbsp;and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.</p>\n\n<p>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.</p>\n\n<p>You can return the answer in any order.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [2,7,11,15], target = 9\n<strong>Output:</strong> [0,1]\n<strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [3,2,4], target = 6\n<strong>Output:</strong> [1,2]\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [3,3], target = 6\n<strong>Output:</strong> [0,1]\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>2 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= target &lt;= 10<sup>9</sup></code></li>\n\t<li><strong>Only one valid answer exists.</strong></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow-up:&nbsp;</strong>Can you come up with an algorithm that is less than <code>O(n<sup>2</sup>)</code><font face=\"monospace\">&nbsp;</font>time complexity?",
+    "starterCode": {
+      "python": "def twoSum(nums: List[int], target: int) -> List[int]:",
+      "javascript": "/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number[]}\n */\nvar twoSum = function(nums, target) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = twoSum([2,7,11,15], 9); assert _res is not None and len(_res) == 2 and set(_res) == set([0,1]), f'Expected indices [0,1] but got {_res}'",
+        "_res = twoSum([3,2,4], 6); assert _res is not None and len(_res) == 2 and set(_res) == set([1,2]), f'Expected indices [1,2] but got {_res}'",
+        "_res = twoSum([3,3], 6); assert _res is not None and len(_res) == 2 and set(_res) == set([0,1]), f'Expected indices [0,1] but got {_res}'",
+        "_nums = list(range(8000)); _res = twoSum(_nums, 7999 + 7998); assert _res is not None and set(_res) == {7998, 7999}, f'Expected [7998, 7999] on stress test but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = twoSum([2,7,11,15], 9); if (!_r || _r.length !== 2 || !__isEqual([..._r].sort(), [...[0,1]].sort())) throw new Error('Expected ' + JSON.stringify([0,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = twoSum([3,2,4], 6); if (!_r || _r.length !== 2 || !__isEqual([..._r].sort(), [...[1,2]].sort())) throw new Error('Expected ' + JSON.stringify([1,2]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = twoSum([3,3], 6); if (!_r || _r.length !== 2 || !__isEqual([..._r].sort(), [...[0,1]].sort())) throw new Error('Expected ' + JSON.stringify([0,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _nums = Array.from({length: 8000}, (_, i) => i); const _r = twoSum(_nums, 7999 + 7998); if (!_r || !__isEqual([..._r].sort(), [7998, 7999])) throw new Error('Stress test failed'); return true; })()"
+      ]
+    },
+    "topic": "Arrays",
+    "hints": [
+      "Think about what complement you need for each number: if you need target - nums[i], can you check that in O(1)?",
+      "A hash map lets you store numbers you've already seen and look up complements instantly.",
+      "Iterate once: for each number, check if (target - number) is already in your map, then store the current number."
+    ],
+    "optimalSolution": {
+      "python": "def twoSum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        comp = target - n\n        if comp in seen:\n            return [seen[comp], i]\n        seen[n] = i",
+      "javascript": "var twoSum = function(nums, target) {\n    const seen = {};\n    for (let i = 0; i < nums.length; i++) {\n        const comp = target - nums[i];\n        if (comp in seen) return [seen[comp], i];\n        seen[nums[i]] = i;\n    }\n};"
+    }
+  },
+  {
+    "id": 9,
+    "title": "Palindrome Number",
+    "difficulty": "Easy",
+    "topic": "Math",
+    "description": "<p>Given an integer <code>x</code>, return <code>true</code> if <code>x</code> is a <span data-keyword=\"palindrome-integer\"><strong>palindrome</strong></span>, and <code>false</code> otherwise.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> x = 121\n<strong>Output:</strong> true\n<strong>Explanation:</strong> 121 reads as 121 from left to right and from right to left.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> x = -121\n<strong>Output:</strong> false\n<strong>Explanation:</strong> From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> x = 10\n<strong>Output:</strong> false\n<strong>Explanation:</strong> Reads 01 from right to left. Therefore it is not a palindrome.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>-2<sup>31</sup>&nbsp;&lt;= x &lt;= 2<sup>31</sup>&nbsp;- 1</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow up:</strong> Could you solve it without converting the integer to a string?",
+    "starterCode": {
+      "python": "def isPalindrome(x: int) -> bool:",
+      "javascript": "/**\n * @param {number} x\n * @return {boolean}\n */\nvar isPalindrome = function(x) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isPalindrome(121); assert _res is True, f'Expected True but got {_res}'",
+        "_res = isPalindrome(-121); assert _res is False, f'Expected False but got {_res}'",
+        "_res = isPalindrome(10); assert _res is False, f'Expected False but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isPalindrome(121); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()",
+        "(() => { const _r = isPalindrome(-121); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()",
+        "(() => { const _r = isPalindrome(10); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()"
+      ]
+    },
+    "hints": [
+      "Beware of overflow when you reverse the integer."
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Roman to Integer",
+    "difficulty": "Easy",
+    "topic": "String",
+    "description": "<p>Roman numerals are represented by seven different symbols:&nbsp;<code>I</code>, <code>V</code>, <code>X</code>, <code>L</code>, <code>C</code>, <code>D</code> and <code>M</code>.</p>\n\n<pre>\n<strong>Symbol</strong>       <strong>Value</strong>\nI             1\nV             5\nX             10\nL             50\nC             100\nD             500\nM             1000</pre>\n\n<p>For example,&nbsp;<code>2</code> is written as <code>II</code>&nbsp;in Roman numeral, just two ones added together. <code>12</code> is written as&nbsp;<code>XII</code>, which is simply <code>X + II</code>. The number <code>27</code> is written as <code>XXVII</code>, which is <code>XX + V + II</code>.</p>\n\n<p>Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not <code>IIII</code>. Instead, the number four is written as <code>IV</code>. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as <code>IX</code>. There are six instances where subtraction is used:</p>\n\n<ul>\n\t<li><code>I</code> can be placed before <code>V</code> (5) and <code>X</code> (10) to make 4 and 9.&nbsp;</li>\n\t<li><code>X</code> can be placed before <code>L</code> (50) and <code>C</code> (100) to make 40 and 90.&nbsp;</li>\n\t<li><code>C</code> can be placed before <code>D</code> (500) and <code>M</code> (1000) to make 400 and 900.</li>\n</ul>\n\n<p>Given a roman numeral, convert it to an integer.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;III&quot;\n<strong>Output:</strong> 3\n<strong>Explanation:</strong> III = 3.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;LVIII&quot;\n<strong>Output:</strong> 58\n<strong>Explanation:</strong> L = 50, V= 5, III = 3.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;MCMXCIV&quot;\n<strong>Output:</strong> 1994\n<strong>Explanation:</strong> M = 1000, CM = 900, XC = 90 and IV = 4.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length &lt;= 15</code></li>\n\t<li><code>s</code> contains only&nbsp;the characters <code>(&#39;I&#39;, &#39;V&#39;, &#39;X&#39;, &#39;L&#39;, &#39;C&#39;, &#39;D&#39;, &#39;M&#39;)</code>.</li>\n\t<li>It is <strong>guaranteed</strong>&nbsp;that <code>s</code> is a valid roman numeral in the range <code>[1, 3999]</code>.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def romanToInt(s: str) -> int:",
+      "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar romanToInt = function(s) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = romanToInt(\"III\"); assert _res == 3, f'Expected 3 but got {_res}'",
+        "_res = romanToInt(\"LVIII\"); assert _res == 58, f'Expected 58 but got {_res}'",
+        "_res = romanToInt(\"MCMXCIV\"); assert _res == 1994, f'Expected 1994 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = romanToInt(\"III\"); if (!__isEqual(_r, 3)) throw new Error('Expected ' + JSON.stringify(3) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = romanToInt(\"LVIII\"); if (!__isEqual(_r, 58)) throw new Error('Expected ' + JSON.stringify(58) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = romanToInt(\"MCMXCIV\"); if (!__isEqual(_r, 1994)) throw new Error('Expected ' + JSON.stringify(1994) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "Problem is simpler to solve by working the string from back to front and using a map."
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "description": "<p>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</p>\n\n<p>An input string is valid if:</p>\n\n<ol>\n\t<li>Open brackets must be closed by the same type of brackets.</li>\n\t<li>Open brackets must be closed in the correct order.</li>\n\t<li>Every close bracket has a corresponding open bracket of the same type.</li>\n</ol>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;()&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;()[]{}&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n</div>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;(]&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">false</span></p>\n</div>\n\n<p><strong class=\"example\">Example 4:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;([])&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n</div>\n\n<p><strong class=\"example\">Example 5:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;([)]&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">false</span></p>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>s</code> consists of parentheses only <code>&#39;()[]{}&#39;</code>.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def isValid(s: str) -> bool:",
+      "javascript": "/**\n * @param {string} s\n * @return {boolean}\n */\nvar isValid = function(s) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "assert isValid(\"()\") is not None, 'Should not be None'",
+        "assert isValid(\"()[]{}\") is not None, 'Should not be None'",
+        "assert isValid(\"(]\") is not None, 'Should not be None'",
+        "assert isValid(\"([])\") is not None, 'Should not be None'",
+        "assert isValid(\"([)]\") is not None, 'Should not be None'",
+        "assert isValid(\"\") is not None, 'Should not be None'",
+        "assert isValid(\"a\") is not None, 'Should not be None'",
+        "assert isValid(\"aa\") is not None, 'Should not be None'",
+        "assert isValid(\"ab\") is not None, 'Should not be None'",
+        "assert isValid(\"abcde\") is not None, 'Should not be None'",
+        "assert isValid(\"racecar\") is not None, 'Should not be None'",
+        "assert isValid(\"amanaplanacanalpanama\") is not None, 'Should not be None'",
+        "assert isValid(\"aaabbbccc\") is not None, 'Should not be None'",
+        "assert isValid(\"abcdefghij\") is not None, 'Should not be None'",
+        "assert isValid(\"zzzzzz\") is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = isValid(\"()\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"()[]{}\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"(]\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"([])\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"([)]\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"a\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"aa\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"ab\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"abcde\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"racecar\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"amanaplanacanalpanama\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"aaabbbccc\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"abcdefghij\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = isValid(\"zzzzzz\"); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "topic": "String",
+    "hints": [
+      "Use a stack: push open brackets, pop when you see a closing bracket.",
+      "When you see a closing bracket, the top of the stack must be the matching open bracket.",
+      "The string is valid if the stack is empty at the end."
+    ],
+    "optimalSolution": {
+      "python": "def isValid(s):\n    stack = []\n    pairs = {')': '(', '}': '{', ']': '['}\n    for c in s:\n        if c in pairs:\n            if not stack or stack[-1] != pairs[c]:\n                return False\n            stack.pop()\n        else:\n            stack.append(c)\n    return not stack",
+      "javascript": "var isValid = function(s) {\n    const stack = [], pairs = {')': '(', '}': '{', ']': '['};\n    for (const c of s) {\n        if (c in pairs) {\n            if (!stack.length || stack[stack.length-1] !== pairs[c]) return false;\n            stack.pop();\n        } else stack.push(c);\n    }\n    return stack.length === 0;\n};"
+    }
+  },
+  {
+    "id": 21,
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "Easy",
+    "description": "<p>You are given the heads of two sorted linked lists <code>list1</code> and <code>list2</code>.</p>\n\n<p>Merge the two lists into one <strong>sorted</strong> list. The list should be made by splicing together the nodes of the first two lists.</p>\n\n<p>Return <em>the head of the merged linked list</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/10/03/merge_ex1.jpg\" style=\"width: 662px; height: 302px;\" />\n<pre>\n<strong>Input:</strong> list1 = [1,2,4], list2 = [1,3,4]\n<strong>Output:</strong> [1,1,2,3,4,4]\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> list1 = [], list2 = []\n<strong>Output:</strong> []\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> list1 = [], list2 = [0]\n<strong>Output:</strong> [0]\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in both lists is in the range <code>[0, 50]</code>.</li>\n\t<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n\t<li>Both <code>list1</code> and <code>list2</code> are sorted in <strong>non-decreasing</strong> order.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(val=0, next=None):\n#         self.val = val\n#         self.next = next\ndef mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:",
+      "javascript": "/**\n * Definition for singly-linked list.\n * function ListNode(val, next) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.next = (next===undefined ? null : next)\n * }\n */\n/**\n * @param {ListNode} list1\n * @param {ListNode} list2\n * @return {ListNode}\n */\nvar mergeTwoLists = function(list1, list2) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = linked_to_list(mergeTwoLists(list_to_linked([1,2,4]), list_to_linked([1,3,4]))); assert _res == [1,1,2,3,4,4], f'Expected [1,1,2,3,4,4] but got {_res}'",
+        "_res = linked_to_list(mergeTwoLists(list_to_linked([]), list_to_linked([]))); assert _res == [], f'Expected [] but got {_res}'",
+        "_res = linked_to_list(mergeTwoLists(list_to_linked([]), list_to_linked([0]))); assert _res == [0], f'Expected [0] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = linkedToList(mergeTwoLists(listToLinked([1,2,4]), listToLinked([1,3,4]))); if (!__isEqual(_r, [1,1,2,3,4,4])) throw new Error('Expected ' + JSON.stringify([1,1,2,3,4,4]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = linkedToList(mergeTwoLists(listToLinked([]), listToLinked([]))); if (!__isEqual(_r, [])) throw new Error('Expected ' + JSON.stringify([]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = linkedToList(mergeTwoLists(listToLinked([]), listToLinked([0]))); if (!__isEqual(_r, [0])) throw new Error('Expected ' + JSON.stringify([0]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Linked List",
+    "hints": [
+      "Use a dummy head node to simplify edge cases.",
+      "Compare l1.val and l2.val, attach the smaller node to the result, advance that pointer.",
+      "When one list is exhausted, attach the remainder of the other directly."
+    ],
+    "optimalSolution": {
+      "python": "def mergeTwoLists(l1, l2):\n    dummy = cur = ListNode(0)\n    while l1 and l2:\n        if l1.val <= l2.val:\n            cur.next = l1; l1 = l1.next\n        else:\n            cur.next = l2; l2 = l2.next\n        cur = cur.next\n    cur.next = l1 or l2\n    return dummy.next",
+      "javascript": "var mergeTwoLists = function(l1, l2) {\n    const dummy = new ListNode(0);\n    let cur = dummy;\n    while (l1 && l2) {\n        if (l1.val <= l2.val) { cur.next = l1; l1 = l1.next; }\n        else { cur.next = l2; l2 = l2.next; }\n        cur = cur.next;\n    }\n    cur.next = l1 || l2;\n    return dummy.next;\n};"
+    }
+  },
+  {
+    "id": 26,
+    "title": "Remove Duplicates from Sorted Array",
+    "difficulty": "Easy",
+    "topic": "Arrays",
+    "description": "<p>Given an integer array <code>nums</code> sorted in <strong>non-decreasing order</strong>, remove the duplicates <a href=\"https://en.wikipedia.org/wiki/In-place_algorithm\" target=\"_blank\"><strong>in-place</strong></a> such that each unique element appears only <strong>once</strong>. The <strong>relative order</strong> of the elements should be kept the <strong>same</strong>.</p>\n\n<p>Consider the number of <em>unique elements</em> in&nbsp;<code>nums</code> to be <code>k<strong>​​​​​​​</strong></code>​​​​​​​. <meta charset=\"UTF-8\" />After removing duplicates, return the number of unique elements&nbsp;<code>k</code>.</p>\n\n<p><meta charset=\"UTF-8\" />The first&nbsp;<code>k</code>&nbsp;elements of&nbsp;<code>nums</code>&nbsp;should contain the unique numbers in <strong>sorted order</strong>. The remaining elements beyond index&nbsp;<code>k - 1</code>&nbsp;can be ignored.</p>\n\n<p><strong>Custom Judge:</strong></p>\n\n<p>The judge will test your solution with the following code:</p>\n\n<pre>\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\n\nint k = removeDuplicates(nums); // Calls your implementation\n\nassert k == expectedNums.length;\nfor (int i = 0; i &lt; k; i++) {\n    assert nums[i] == expectedNums[i];\n}\n</pre>\n\n<p>If all assertions pass, then your solution will be <strong>accepted</strong>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [1,1,2]\n<strong>Output:</strong> 2, nums = [1,2,_]\n<strong>Explanation:</strong> Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.\nIt does not matter what you leave beyond the returned k (hence they are underscores).\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [0,0,1,1,1,2,2,3,3,4]\n<strong>Output:</strong> 5, nums = [0,1,2,3,4,_,_,_,_,_]\n<strong>Explanation:</strong> Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.\nIt does not matter what you leave beyond the returned k (hence they are underscores).\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 3 * 10<sup>4</sup></code></li>\n\t<li><code>-100 &lt;= nums[i] &lt;= 100</code></li>\n\t<li><code>nums</code> is sorted in <strong>non-decreasing</strong> order.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def removeDuplicates(nums: list[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar removeDuplicates = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = removeDuplicates([1,1,2]); assert _res == 2, nums = [1,2,_], f'Expected 2, nums = [1,2,_] but got {_res}'",
+        "_res = removeDuplicates([0,0,1,1,1,2,2,3,3,4]); assert _res == 5, nums = [0,1,2,3,4,_,_,_,_,_], f'Expected 5, nums = [0,1,2,3,4,_,_,_,_,_] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = removeDuplicates([1,1,2]); if (!__isEqual(_r, 2, nums = [1,2,_])) throw new Error('Expected ' + JSON.stringify(2, nums = [1,2,_]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = removeDuplicates([0,0,1,1,1,2,2,3,3,4]); if (!__isEqual(_r, 5, nums = [0,1,2,3,4,_,_,_,_,_])) throw new Error('Expected ' + JSON.stringify(5, nums = [0,1,2,3,4,_,_,_,_,_]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "In this problem, the key point to focus on is the input array being sorted. As far as duplicate elements are concerned, what is their positioning in the array when the given array is sorted? Look at the image below for the answer. If we know the position of one of the elements, do we also know the positioning of all the duplicate elements?\r\n\r\n<br>\r\n<img src=\"https://assets.leetcode.com/uploads/2019/10/20/hint_rem_dup.png\" width=\"500\"/>",
+      "We need to modify the array in-place and the size of the final array would potentially be smaller than the size of the input array. So, we ought to use a two-pointer approach here. One, that would keep track of the current element in the original array and another one for just the unique elements.",
+      "Essentially, once an element is encountered, you simply need to <b>bypass</b> its duplicates and move on to the next unique element."
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Remove Element",
+    "difficulty": "Easy",
+    "topic": "Arrays",
+    "description": "<p>Given an integer array <code>nums</code> and an integer <code>val</code>, remove all occurrences of <code>val</code> in <code>nums</code> <a href=\"https://en.wikipedia.org/wiki/In-place_algorithm\" target=\"_blank\"><strong>in-place</strong></a>. The order of the elements may be changed. Then return <em>the number of elements in </em><code>nums</code><em> which are not equal to </em><code>val</code>.</p>\n\n<p>Consider the number of elements in <code>nums</code> which are not equal to <code>val</code> be <code>k</code>, to get accepted, you need to do the following things:</p>\n\n<ul>\n\t<li>Change the array <code>nums</code> such that the first <code>k</code> elements of <code>nums</code> contain the elements which are not equal to <code>val</code>. The remaining elements of <code>nums</code> are not important as well as the size of <code>nums</code>.</li>\n\t<li>Return <code>k</code>.</li>\n</ul>\n\n<p><strong>Custom Judge:</strong></p>\n\n<p>The judge will test your solution with the following code:</p>\n\n<pre>\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n                            // It is sorted with no values equaling val.\n\nint k = removeElement(nums, val); // Calls your implementation\n\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i &lt; actualLength; i++) {\n    assert nums[i] == expectedNums[i];\n}\n</pre>\n\n<p>If all assertions pass, then your solution will be <strong>accepted</strong>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [3,2,2,3], val = 3\n<strong>Output:</strong> 2, nums = [2,2,_,_]\n<strong>Explanation:</strong> Your function should return k = 2, with the first two elements of nums being 2.\nIt does not matter what you leave beyond the returned k (hence they are underscores).\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [0,1,2,2,3,0,4,2], val = 2\n<strong>Output:</strong> 5, nums = [0,1,4,0,3,_,_,_]\n<strong>Explanation:</strong> Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.\nNote that the five elements can be returned in any order.\nIt does not matter what you leave beyond the returned k (hence they are underscores).\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>0 &lt;= nums.length &lt;= 100</code></li>\n\t<li><code>0 &lt;= nums[i] &lt;= 50</code></li>\n\t<li><code>0 &lt;= val &lt;= 100</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def removeElement(nums: list[int], val: int) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @param {number} val\n * @return {number}\n */\nvar removeElement = function(nums, val) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = removeElement([3,2,2,3], 3); assert _res == 2, nums = [2,2,_,_], f'Expected 2, nums = [2,2,_,_] but got {_res}'",
+        "_res = removeElement([0,1,2,2,3,0,4,2], 2); assert _res == 5, nums = [0,1,4,0,3,_,_,_], f'Expected 5, nums = [0,1,4,0,3,_,_,_] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = removeElement([3,2,2,3], 3); if (!__isEqual(_r, 2, nums = [2,2,_,_])) throw new Error('Expected ' + JSON.stringify(2, nums = [2,2,_,_]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = removeElement([0,1,2,2,3,0,4,2], 2); if (!__isEqual(_r, 5, nums = [0,1,4,0,3,_,_,_])) throw new Error('Expected ' + JSON.stringify(5, nums = [0,1,4,0,3,_,_,_]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "The problem statement clearly asks us to modify the array in-place and it also says that the element beyond the new length of the array can be anything. Given an element, we need to remove all the occurrences of it from the array. We don't technically need to <b>remove</b> that element per se, right?",
+      "We can move all the occurrences of this element to the end of the array. Use two pointers!\r\n<br><img src=\"https://assets.leetcode.com/uploads/2019/10/20/hint_remove_element.png\" width=\"500\"/>",
+      "Yet another direction of thought is to consider the elements to be removed as non-existent. In a single pass, if we keep copying the visible elements in-place, that should also solve this problem for us."
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Search Insert Position",
+    "difficulty": "Easy",
+    "topic": "Binary Search",
+    "description": "<p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>\n\n<p>You must&nbsp;write an algorithm with&nbsp;<code>O(log n)</code> runtime complexity.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [1,3,5,6], target = 5\n<strong>Output:</strong> 2\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [1,3,5,6], target = 2\n<strong>Output:</strong> 1\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums = [1,3,5,6], target = 7\n<strong>Output:</strong> 4\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>\n\t<li><code>nums</code> contains <strong>distinct</strong> values sorted in <strong>ascending</strong> order.</li>\n\t<li><code>-10<sup>4</sup> &lt;= target &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def searchInsert(nums: list[int], target: int) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number}\n */\nvar searchInsert = function(nums, target) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = searchInsert([1,3,5,6], 5); assert _res == 2, f'Expected 2 but got {_res}'",
+        "_res = searchInsert([1,3,5,6], 2); assert _res == 1, f'Expected 1 but got {_res}'",
+        "_res = searchInsert([1,3,5,6], 7); assert _res == 4, f'Expected 4 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = searchInsert([1,3,5,6], 5); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = searchInsert([1,3,5,6], 2); if (!__isEqual(_r, 1)) throw new Error('Expected ' + JSON.stringify(1) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = searchInsert([1,3,5,6], 7); if (!__isEqual(_r, 4)) throw new Error('Expected ' + JSON.stringify(4) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 58,
+    "title": "Length of Last Word",
+    "difficulty": "Easy",
+    "topic": "String",
+    "description": "<p>Given a string <code>s</code> consisting of words and spaces, return <em>the length of the <strong>last</strong> word in the string.</em></p>\n\n<p>A <strong>word</strong> is a maximal <span data-keyword=\"substring-nonempty\">substring</span> consisting of non-space characters only.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;Hello World&quot;\n<strong>Output:</strong> 5\n<strong>Explanation:</strong> The last word is &quot;World&quot; with length 5.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;   fly me   to   the moon  &quot;\n<strong>Output:</strong> 4\n<strong>Explanation:</strong> The last word is &quot;moon&quot; with length 4.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;luffy is still joyboy&quot;\n<strong>Output:</strong> 6\n<strong>Explanation:</strong> The last word is &quot;joyboy&quot; with length 6.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>s</code> consists of only English letters and spaces <code>&#39; &#39;</code>.</li>\n\t<li>There will be at least one word in <code>s</code>.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def lengthOfLastWord(s: str) -> int:",
+      "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar lengthOfLastWord = function(s) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = lengthOfLastWord(\"Hello World\"); assert _res == 5, f'Expected 5 but got {_res}'",
+        "_res = lengthOfLastWord(\"   fly me   to   the moon  \"); assert _res == 4, f'Expected 4 but got {_res}'",
+        "_res = lengthOfLastWord(\"luffy is still joyboy\"); assert _res == 6, f'Expected 6 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = lengthOfLastWord(\"Hello World\"); if (!__isEqual(_r, 5)) throw new Error('Expected ' + JSON.stringify(5) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = lengthOfLastWord(\"   fly me   to   the moon  \"); if (!__isEqual(_r, 4)) throw new Error('Expected ' + JSON.stringify(4) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = lengthOfLastWord(\"luffy is still joyboy\"); if (!__isEqual(_r, 6)) throw new Error('Expected ' + JSON.stringify(6) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 66,
+    "title": "Plus One",
+    "difficulty": "Easy",
+    "topic": "Math",
+    "description": "<p>You are given a <strong>large integer</strong> represented as an integer array <code>digits</code>, where each <code>digits[i]</code> is the <code>i<sup>th</sup></code> digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading <code>0</code>&#39;s.</p>\n\n<p>Increment the large integer by one and return <em>the resulting array of digits</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> digits = [1,2,3]\n<strong>Output:</strong> [1,2,4]\n<strong>Explanation:</strong> The array represents the integer 123.\nIncrementing by one gives 123 + 1 = 124.\nThus, the result should be [1,2,4].\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> digits = [4,3,2,1]\n<strong>Output:</strong> [4,3,2,2]\n<strong>Explanation:</strong> The array represents the integer 4321.\nIncrementing by one gives 4321 + 1 = 4322.\nThus, the result should be [4,3,2,2].\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> digits = [9]\n<strong>Output:</strong> [1,0]\n<strong>Explanation:</strong> The array represents the integer 9.\nIncrementing by one gives 9 + 1 = 10.\nThus, the result should be [1,0].\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= digits.length &lt;= 100</code></li>\n\t<li><code>0 &lt;= digits[i] &lt;= 9</code></li>\n\t<li><code>digits</code> does not contain any leading <code>0</code>&#39;s.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def plusOne(digits: list[int]) -> list[int]:",
+      "javascript": "/**\n * @param {number[]} digits\n * @return {number[]}\n */\nvar plusOne = function(digits) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = plusOne([1,2,3]); assert _res == [1,2,4], f'Expected [1,2,4] but got {_res}'",
+        "_res = plusOne([4,3,2,1]); assert _res == [4,3,2,2], f'Expected [4,3,2,2] but got {_res}'",
+        "_res = plusOne([9]); assert _res == [1,0], f'Expected [1,0] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = plusOne([1,2,3]); if (!__isEqual(_r, [1,2,4])) throw new Error('Expected ' + JSON.stringify([1,2,4]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = plusOne([4,3,2,1]); if (!__isEqual(_r, [4,3,2,2])) throw new Error('Expected ' + JSON.stringify([4,3,2,2]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = plusOne([9]); if (!__isEqual(_r, [1,0])) throw new Error('Expected ' + JSON.stringify([1,0]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 69,
+    "title": "Sqrt(x)",
+    "difficulty": "Easy",
+    "topic": "Math",
+    "description": "<p>Given a non-negative integer <code>x</code>, return <em>the square root of </em><code>x</code><em> rounded down to the nearest integer</em>. The returned integer should be <strong>non-negative</strong> as well.</p>\n\n<p>You <strong>must not use</strong> any built-in exponent function or operator.</p>\n\n<ul>\n\t<li>For example, do not use <code>pow(x, 0.5)</code> in c++ or <code>x ** 0.5</code> in python.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> x = 4\n<strong>Output:</strong> 2\n<strong>Explanation:</strong> The square root of 4 is 2, so we return 2.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> x = 8\n<strong>Output:</strong> 2\n<strong>Explanation:</strong> The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>0 &lt;= x &lt;= 2<sup>31</sup> - 1</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def mySqrt(x: int) -> int:",
+      "javascript": "/**\n * @param {number} x\n * @return {number}\n */\nvar mySqrt = function(x) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = mySqrt(4); assert _res == 2, f'Expected 2 but got {_res}'",
+        "_res = mySqrt(8); assert _res == 2, f'Expected 2 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = mySqrt(4); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = mySqrt(8); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "Try exploring all integers. (Credits: @annujoshi)",
+      "Use the sorted property of integers to reduced the search space. (Credits: @annujoshi)"
+    ]
+  },
+  {
+    "id": 70,
+    "title": "Climbing Stairs",
+    "difficulty": "Easy",
+    "description": "<p>You are climbing a staircase. It takes <code>n</code> steps to reach the top.</p>\n\n<p>Each time you can either climb <code>1</code> or <code>2</code> steps. In how many distinct ways can you climb to the top?</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 2\n<strong>Output:</strong> 2\n<strong>Explanation:</strong> There are two ways to climb to the top.\n1. 1 step + 1 step\n2. 2 steps\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 3\n<strong>Output:</strong> 3\n<strong>Explanation:</strong> There are three ways to climb to the top.\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 45</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def climbStairs(n: int) -> int:",
+      "javascript": "/**\n * @param {number} n\n * @return {number}\n */\nvar climbStairs = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = climbStairs(2); assert _res == 2, f'Expected 2 but got {_res}'",
+        "_res = climbStairs(3); assert _res == 3, f'Expected 3 but got {_res}'",
+        "assert climbStairs(38) == 63245986, 'Stress test failed'"
+      ],
+      "javascript": [
+        "(() => { const _r = climbStairs(2); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = climbStairs(3); if (!__isEqual(_r, 3)) throw new Error('Expected ' + JSON.stringify(3) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { if (climbStairs(38) !== 63245986) throw new Error('Stress test failed'); return true; })()"
+      ]
+    },
+    "topic": "Dynamic Programming",
+    "hints": [
+      "To reach step n you came from step n-1 (took 1 step) or step n-2 (took 2 steps).",
+      "f(n) = f(n-1) + f(n-2) — this is the Fibonacci recurrence.",
+      "Bottom-up DP with O(1) space: track just the last two values."
+    ],
+    "optimalSolution": {
+      "python": "def climbStairs(n):\n    a, b = 1, 1\n    for _ in range(n - 1):\n        a, b = b, a + b\n    return b",
+      "javascript": "var climbStairs = function(n) {\n    let a = 1, b = 1;\n    for (let i = 1; i < n; i++) [a, b] = [b, a + b];\n    return b;\n};"
+    }
+  },
+  {
+    "id": 88,
+    "title": "Merge Sorted Array",
+    "difficulty": "Easy",
+    "topic": "Arrays",
+    "description": "<p>You are given two integer arrays <code>nums1</code> and <code>nums2</code>, sorted in <strong>non-decreasing order</strong>, and two integers <code>m</code> and <code>n</code>, representing the number of elements in <code>nums1</code> and <code>nums2</code> respectively.</p>\n\n<p><strong>Merge</strong> <code>nums1</code> and <code>nums2</code> into a single array sorted in <strong>non-decreasing order</strong>.</p>\n\n<p>The final sorted array should not be returned by the function, but instead be <em>stored inside the array </em><code>nums1</code>. To accommodate this, <code>nums1</code> has a length of <code>m + n</code>, where the first <code>m</code> elements denote the elements that should be merged, and the last <code>n</code> elements are set to <code>0</code> and should be ignored. <code>nums2</code> has a length of <code>n</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3\n<strong>Output:</strong> [1,2,2,3,5,6]\n<strong>Explanation:</strong> The arrays we are merging are [1,2,3] and [2,5,6].\nThe result of the merge is [<u>1</u>,<u>2</u>,2,<u>3</u>,5,6] with the underlined elements coming from nums1.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums1 = [1], m = 1, nums2 = [], n = 0\n<strong>Output:</strong> [1]\n<strong>Explanation:</strong> The arrays we are merging are [1] and [].\nThe result of the merge is [1].\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> nums1 = [0], m = 0, nums2 = [1], n = 1\n<strong>Output:</strong> [1]\n<strong>Explanation:</strong> The arrays we are merging are [] and [1].\nThe result of the merge is [1].\nNote that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>nums1.length == m + n</code></li>\n\t<li><code>nums2.length == n</code></li>\n\t<li><code>0 &lt;= m, n &lt;= 200</code></li>\n\t<li><code>1 &lt;= m + n &lt;= 200</code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums1[i], nums2[j] &lt;= 10<sup>9</sup></code></li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up: </strong>Can you come up with an algorithm that runs in <code>O(m + n)</code> time?</p>\n",
+    "starterCode": {
+      "python": "def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:\n    \"\"\"\n    Do not return anything, modify nums1 in-place instead.\n    \"\"\"",
+      "javascript": "/**\n * @param {number[]} nums1\n * @param {number} m\n * @param {number[]} nums2\n * @param {number} n\n * @return {void} Do not return anything, modify nums1 in-place instead.\n */\nvar merge = function(nums1, m, nums2, n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = merge([1,2,3,0,0,0], 3, [2,5,6], 3); assert _res == [1,2,2,3,5,6], f'Expected [1,2,2,3,5,6] but got {_res}'",
+        "_res = merge([1], 1, [], 0); assert _res == [1], f'Expected [1] but got {_res}'",
+        "_res = merge([0], 0, [1], 1); assert _res == [1], f'Expected [1] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = merge([1,2,3,0,0,0], 3, [2,5,6], 3); if (!__isEqual(_r, [1,2,2,3,5,6])) throw new Error('Expected ' + JSON.stringify([1,2,2,3,5,6]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = merge([1], 1, [], 0); if (!__isEqual(_r, [1])) throw new Error('Expected ' + JSON.stringify([1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = merge([0], 0, [1], 1); if (!__isEqual(_r, [1])) throw new Error('Expected ' + JSON.stringify([1]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "You can easily solve this problem if you simply think about two elements at a time rather than two arrays. We know that each of the individual arrays is sorted. What we don't know is how they will intertwine. Can we take a local decision and arrive at an optimal solution?",
+      "If you simply consider one element each at a time from the two arrays and make a decision and proceed accordingly, you will arrive at the optimal solution."
+    ]
+  },
+  {
+    "id": 100,
+    "title": "Same Tree",
+    "difficulty": "Easy",
+    "description": "<p>Given the roots of two binary trees <code>p</code> and <code>q</code>, write a function to check if they are the same or not.</p>\n\n<p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/12/20/ex1.jpg\" style=\"width: 622px; height: 182px;\" />\n<pre>\n<strong>Input:</strong> p = [1,2,3], q = [1,2,3]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/12/20/ex2.jpg\" style=\"width: 382px; height: 182px;\" />\n<pre>\n<strong>Input:</strong> p = [1,2], q = [1,null,2]\n<strong>Output:</strong> false\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/12/20/ex3.jpg\" style=\"width: 622px; height: 182px;\" />\n<pre>\n<strong>Input:</strong> p = [1,2,1], q = [1,1,2]\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in both trees is in the range <code>[0, 100]</code>.</li>\n\t<li><code>-10<sup>4</sup> &lt;= Node.val &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} p\n * @param {TreeNode} q\n * @return {boolean}\n */\nvar isSameTree = function(p, q) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isSameTree(list_to_tree([1,2,3]), list_to_tree([1,2,3])); assert _res == true, f'Expected true but got {_res}'",
+        "_res = isSameTree(list_to_tree([1,2]), list_to_tree([1,None,2])); assert _res == false, f'Expected false but got {_res}'",
+        "_res = isSameTree(list_to_tree([1,2,1]), list_to_tree([1,1,2])); assert _res == false, f'Expected false but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isSameTree(listToTree([1,2,3]), listToTree([1,2,3])); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isSameTree(listToTree([1,2]), listToTree([1,null,2])); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isSameTree(listToTree([1,2,1]), listToTree([1,1,2])); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Trees",
+    "hints": [
+      "Two trees are the same if their roots have the same value and their left and right subtrees are also the same.",
+      "Base cases: two nulls are the same; a null and a non-null are different.",
+      "Simple recursive solution: return p.val == q.val and sameTree(p.left, q.left) and sameTree(p.right, q.right)."
+    ],
+    "optimalSolution": {
+      "python": "def isSameTree(p, q):\n    if not p and not q: return True\n    if not p or not q or p.val != q.val: return False\n    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)",
+      "javascript": "var isSameTree = function(p, q) {\n    if (!p && !q) return true;\n    if (!p || !q || p.val !== q.val) return false;\n    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);\n};"
+    }
+  },
+  {
+    "id": 101,
+    "title": "Symmetric Tree",
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "description": "<p>Given the <code>root</code> of a binary tree, <em>check whether it is a mirror of itself</em> (i.e., symmetric around its center).</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg\" style=\"width: 354px; height: 291px;\" />\n<pre>\n<strong>Input:</strong> root = [1,2,2,3,4,4,3]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/02/19/symtree2.jpg\" style=\"width: 308px; height: 258px;\" />\n<pre>\n<strong>Input:</strong> root = [1,2,2,null,3,null,3]\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.</li>\n\t<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow up:</strong> Could you solve it both recursively and iteratively?",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef isSymmetric(root: TreeNode | None) -> bool:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @return {boolean}\n */\nvar isSymmetric = function(root) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isSymmetric(list_to_tree([1,2,2,3,4,4,3])); assert _res == true, f'Expected true but got {_res}'",
+        "_res = isSymmetric(list_to_tree([1,2,2,None,3,None,3])); assert _res == false, f'Expected false but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isSymmetric(listToTree([1,2,2,3,4,4,3])); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isSymmetric(listToTree([1,2,2,null,3,null,3])); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 104,
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "Easy",
+    "description": "<p>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</p>\n\n<p>A binary tree&#39;s <strong>maximum depth</strong>&nbsp;is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/11/26/tmp-tree.jpg\" style=\"width: 400px; height: 277px;\" />\n<pre>\n<strong>Input:</strong> root = [3,9,20,null,null,15,7]\n<strong>Output:</strong> 3\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> root = [1,null,2]\n<strong>Output:</strong> 2\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the tree is in the range <code>[0, 10<sup>4</sup>]</code>.</li>\n\t<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef maxDepth(root: Optional[TreeNode]) -> int:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @return {number}\n */\nvar maxDepth = function(root) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = maxDepth(list_to_tree([3,9,20,None,None,15,7])); assert _res == 3, f'Expected 3 but got {_res}'",
+        "_res = maxDepth(list_to_tree([1,None,2])); assert _res == 2, f'Expected 2 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = maxDepth(listToTree([3,9,20,null,null,15,7])); if (!__isEqual(_r, 3)) throw new Error('Expected ' + JSON.stringify(3) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = maxDepth(listToTree([1,null,2])); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Trees",
+    "hints": [
+      "The depth of a tree is 1 + max(depth of left subtree, depth of right subtree).",
+      "A null node has depth 0 — that's your base case.",
+      "Both DFS (recursive or iterative with a stack) and BFS (level-order with a queue) work."
+    ],
+    "optimalSolution": {
+      "python": "def maxDepth(root):\n    if not root: return 0\n    return 1 + max(maxDepth(root.left), maxDepth(root.right))",
+      "javascript": "var maxDepth = function(root) {\n    if (!root) return 0;\n    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));\n};"
+    }
+  },
+  {
+    "id": 110,
+    "title": "Balanced Binary Tree",
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "description": "<p>Given a binary tree, determine if it is <span data-keyword=\"height-balanced\"><strong>height-balanced</strong></span>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/10/06/balance_1.jpg\" style=\"width: 342px; height: 221px;\" />\n<pre>\n<strong>Input:</strong> root = [3,9,20,null,null,15,7]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/10/06/balance_2.jpg\" style=\"width: 452px; height: 301px;\" />\n<pre>\n<strong>Input:</strong> root = [1,2,2,3,3,null,null,4,4]\n<strong>Output:</strong> false\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> root = []\n<strong>Output:</strong> true\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the tree is in the range <code>[0, 5000]</code>.</li>\n\t<li><code>-10<sup>4</sup> &lt;= Node.val &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef isBalanced(root: TreeNode | None) -> bool:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @return {boolean}\n */\nvar isBalanced = function(root) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isBalanced(list_to_tree([3,9,20,None,None,15,7])); assert _res == true, f'Expected true but got {_res}'",
+        "_res = isBalanced(list_to_tree([1,2,2,3,3,None,None,4,4])); assert _res == false, f'Expected false but got {_res}'",
+        "_res = isBalanced(list_to_tree([])); assert _res == true, f'Expected true but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isBalanced(listToTree([3,9,20,null,null,15,7])); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isBalanced(listToTree([1,2,2,3,3,null,null,4,4])); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isBalanced(listToTree([])); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 121,
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "Easy",
+    "description": "<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>i<sup>th</sup></code> day.</p>\n\n<p>You want to maximize your profit by choosing a <strong>single day</strong> to buy one stock and choosing a <strong>different day in the future</strong> to sell that stock.</p>\n\n<p>Return <em>the maximum profit you can achieve from this transaction</em>. If you cannot achieve any profit, return <code>0</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> prices = [7,1,5,3,6,4]\n<strong>Output:</strong> 5\n<strong>Explanation:</strong> Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.\nNote that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> prices = [7,6,4,3,1]\n<strong>Output:</strong> 0\n<strong>Explanation:</strong> In this case, no transactions are done and the max profit = 0.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= prices.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>0 &lt;= prices[i] &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def maxProfit(prices: List[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} prices\n * @return {number}\n */\nvar maxProfit = function(prices) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = maxProfit([7,1,5,3,6,4]); assert _res == 5, f'Expected 5 but got {_res}'",
+        "_res = maxProfit([7,6,4,3,1]); assert _res == 0, f'Expected 0 but got {_res}'",
+        "_prices = list(range(10000, 0, -1)) + [20000]; assert maxProfit(_prices) == 19999, 'Stress test failed'"
+      ],
+      "javascript": [
+        "(() => { const _r = maxProfit([7,1,5,3,6,4]); if (!__isEqual(_r, 5)) throw new Error('Expected ' + JSON.stringify(5) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = maxProfit([7,6,4,3,1]); if (!__isEqual(_r, 0)) throw new Error('Expected ' + JSON.stringify(0) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _prices = Array.from({length: 10000}, (_, i) => 10000 - i); _prices.push(20000); if (maxProfit(_prices) !== 19999) throw new Error('Stress test failed'); return true; })()"
+      ]
+    },
+    "topic": "Sliding Window",
+    "hints": [
+      "You must buy before you sell — so you only care about the minimum price seen so far up to day i.",
+      "Track a running minimum as you scan left to right, and compute today's profit as price - minSoFar.",
+      "One pass: update minPrice when you see a lower price, update maxProfit when you see a higher profit."
+    ],
+    "optimalSolution": {
+      "python": "def maxProfit(prices):\n    min_price, max_profit = float('inf'), 0\n    for p in prices:\n        min_price = min(min_price, p)\n        max_profit = max(max_profit, p - min_price)\n    return max_profit",
+      "javascript": "var maxProfit = function(prices) {\n    let minPrice = Infinity, maxProfit = 0;\n    for (const p of prices) {\n        minPrice = Math.min(minPrice, p);\n        maxProfit = Math.max(maxProfit, p - minPrice);\n    }\n    return maxProfit;\n};"
+    }
+  },
+  {
+    "id": 125,
+    "title": "Valid Palindrome",
+    "difficulty": "Easy",
+    "description": "<p>A phrase is a <strong>palindrome</strong> if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.</p>\n\n<p>Given a string <code>s</code>, return <code>true</code><em> if it is a <strong>palindrome</strong>, or </em><code>false</code><em> otherwise</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;A man, a plan, a canal: Panama&quot;\n<strong>Output:</strong> true\n<strong>Explanation:</strong> &quot;amanaplanacanalpanama&quot; is a palindrome.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot;race a car&quot;\n<strong>Output:</strong> false\n<strong>Explanation:</strong> &quot;raceacar&quot; is not a palindrome.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> s = &quot; &quot;\n<strong>Output:</strong> true\n<strong>Explanation:</strong> s is an empty string &quot;&quot; after removing non-alphanumeric characters.\nSince an empty string reads the same forward and backward, it is a palindrome.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length &lt;= 2 * 10<sup>5</sup></code></li>\n\t<li><code>s</code> consists only of printable ASCII characters.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def isPalindrome(s: str) -> bool:",
+      "javascript": "/**\n * @param {string} s\n * @return {boolean}\n */\nvar isPalindrome = function(s) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isPalindrome(\"A man, a plan, a canal: Panama\"); assert _res is True, f'Expected True but got {_res}'",
+        "_res = isPalindrome(\"race a car\"); assert _res is False, f'Expected False but got {_res}'",
+        "_res = isPalindrome(\" \"); assert _res is True, f'Expected True but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isPalindrome(\"A man, a plan, a canal: Panama\"); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()",
+        "(() => { const _r = isPalindrome(\"race a car\"); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()",
+        "(() => { const _r = isPalindrome(\" \"); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()"
+      ]
+    },
+    "topic": "String",
+    "hints": [
+      "Strip non-alphanumeric characters and lowercase, then check if it equals its reverse.",
+      "Or use two pointers from both ends, skipping non-alphanumeric characters.",
+      "Two-pointer is O(1) space; the string-cleaning approach uses O(n) extra space."
+    ],
+    "optimalSolution": {
+      "python": "def isPalindrome(s):\n    l, r = 0, len(s) - 1\n    while l < r:\n        while l < r and not s[l].isalnum(): l += 1\n        while l < r and not s[r].isalnum(): r -= 1\n        if s[l].lower() != s[r].lower(): return False\n        l += 1; r -= 1\n    return True",
+      "javascript": "var isPalindrome = function(s) {\n    let l = 0, r = s.length - 1;\n    const isAlnum = c => /[a-zA-Z0-9]/.test(c);\n    while (l < r) {\n        while (l < r && !isAlnum(s[l])) l++;\n        while (l < r && !isAlnum(s[r])) r--;\n        if (s[l].toLowerCase() !== s[r].toLowerCase()) return false;\n        l++; r--;\n    }\n    return true;\n};"
+    }
+  },
+  {
+    "id": 136,
+    "title": "Single Number",
+    "difficulty": "Easy",
+    "topic": "Bit Manipulation",
+    "description": "<p>Given a <strong>non-empty</strong>&nbsp;array of integers <code>nums</code>, every element appears <em>twice</em> except for one. Find that single one.</p>\n\n<p>You must&nbsp;implement a solution with a linear runtime complexity and use&nbsp;only constant&nbsp;extra space.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [2,2,1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">1</span></p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [4,1,2,1,2]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">4</span></p>\n</div>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">1</span></p>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 3 * 10<sup>4</sup></code></li>\n\t<li><code>-3 * 10<sup>4</sup> &lt;= nums[i] &lt;= 3 * 10<sup>4</sup></code></li>\n\t<li>Each element in the array appears twice except for one element which appears only once.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def singleNumber(nums: list[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar singleNumber = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "assert singleNumber([2, 2, 1]) is not None, 'Should not be None'",
+        "assert singleNumber([4, 1, 2, 1, 2]) is not None, 'Should not be None'",
+        "assert singleNumber([1]) is not None, 'Should not be None'",
+        "assert singleNumber([]) is not None, 'Should not be None'",
+        "assert singleNumber([0]) is not None, 'Should not be None'",
+        "assert singleNumber([-1]) is not None, 'Should not be None'",
+        "assert singleNumber([1000000, -1000000]) is not None, 'Should not be None'",
+        "assert singleNumber([1, 1, 1, 1]) is not None, 'Should not be None'",
+        "assert singleNumber([-49, -98]) is not None, 'Should not be None'",
+        "assert singleNumber([59, 91, 13, -28, 90]) is not None, 'Should not be None'",
+        "assert singleNumber([0, 3, 7, 3, 6, 5]) is not None, 'Should not be None'",
+        "assert singleNumber([-74, -66, -63, 29, 94]) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = singleNumber([2, 2, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([4, 1, 2, 1, 2]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([0]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([-1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([1000000, -1000000]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([1, 1, 1, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([-49, -98]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([59, 91, 13, -28, 90]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([0, 3, 7, 3, 6, 5]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = singleNumber([-74, -66, -63, 29, 94]); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "hints": [
+      "Think about the XOR (^) operator's property."
+    ]
+  },
+  {
+    "id": 141,
+    "title": "Linked List Cycle",
+    "difficulty": "Easy",
+    "description": "<p>Given <code>head</code>, the head of a linked list, determine if the linked list has a cycle in it.</p>\n\n<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the&nbsp;<code>next</code>&nbsp;pointer. Internally, <code>pos</code>&nbsp;is used to denote the index of the node that&nbsp;tail&#39;s&nbsp;<code>next</code>&nbsp;pointer is connected to.&nbsp;<strong>Note that&nbsp;<code>pos</code>&nbsp;is not passed as a parameter</strong>.</p>\n\n<p>Return&nbsp;<code>true</code><em> if there is a cycle in the linked list</em>. Otherwise, return <code>false</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png\" style=\"width: 300px; height: 97px; margin-top: 8px; margin-bottom: 8px;\" />\n<pre>\n<strong>Input:</strong> head = [3,2,0,-4], pos = 1\n<strong>Output:</strong> true\n<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png\" style=\"width: 141px; height: 74px;\" />\n<pre>\n<strong>Input:</strong> head = [1,2], pos = 0\n<strong>Output:</strong> true\n<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 0th node.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png\" style=\"width: 45px; height: 45px;\" />\n<pre>\n<strong>Input:</strong> head = [1], pos = -1\n<strong>Output:</strong> false\n<strong>Explanation:</strong> There is no cycle in the linked list.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of the nodes in the list is in the range <code>[0, 10<sup>4</sup>]</code>.</li>\n\t<li><code>-10<sup>5</sup> &lt;= Node.val &lt;= 10<sup>5</sup></code></li>\n\t<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>\n",
+    "starterCode": {
+      "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(x):\n#         self.val = x\n#         self.next = None\n\ndef hasCycle(head: Optional[ListNode]) -> bool:",
+      "javascript": "/**\n * Definition for singly-linked list.\n * function ListNode(val) {\n *     this.val = val;\n *     this.next = null;\n * }\n */\n\n/**\n * @param {ListNode} head\n * @return {boolean}\n */\nvar hasCycle = function(head) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = hasCycle(list_to_linked([3,2,0,-4]), 1); assert _res == true, f'Expected true but got {_res}'",
+        "_res = hasCycle(list_to_linked([1,2]), 0); assert _res == true, f'Expected true but got {_res}'",
+        "_res = hasCycle(list_to_linked([1]), -1); assert _res == false, f'Expected false but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = hasCycle(listToLinked([3,2,0,-4]), 1); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = hasCycle(listToLinked([1,2]), 0); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = hasCycle(listToLinked([1]), -1); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Linked List",
+    "hints": [
+      "Floyd's cycle detection: use two pointers — slow moves 1 step, fast moves 2 steps.",
+      "If there's a cycle, fast will eventually lap slow and they'll meet.",
+      "If fast reaches null (or fast.next is null), there's no cycle."
+    ],
+    "optimalSolution": {
+      "python": "def hasCycle(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast:\n            return True\n    return False",
+      "javascript": "var hasCycle = function(head) {\n    let slow = head, fast = head;\n    while (fast && fast.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n        if (slow === fast) return true;\n    }\n    return false;\n};"
+    }
+  },
+  {
+    "id": 169,
+    "title": "Majority Element",
+    "difficulty": "Easy",
+    "topic": "Arrays",
+    "description": "<p>Given an array <code>nums</code> of size <code>n</code>, return <em>the majority element</em>.</p>\n\n<p>The majority element is the element that appears more than <code>&lfloor;n / 2&rfloor;</code> times. You may assume that the majority element always exists in the array.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> nums = [3,2,3]\n<strong>Output:</strong> 3\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> nums = [2,2,1,1,1,2,2]\n<strong>Output:</strong> 2\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>n == nums.length</code></li>\n\t<li><code>1 &lt;= n &lt;= 5 * 10<sup>4</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n\t<li>The input is generated such that a majority element will exist in the array.</li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow-up:</strong> Could you solve the problem in linear time and in <code>O(1)</code> space?",
+    "starterCode": {
+      "python": "def majorityElement(nums: list[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar majorityElement = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = majorityElement([3,2,3]); assert _res == 3, f'Expected 3 but got {_res}'",
+        "_res = majorityElement([2,2,1,1,1,2,2]); assert _res == 2, f'Expected 2 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = majorityElement([3,2,3]); if (!__isEqual(_r, 3)) throw new Error('Expected ' + JSON.stringify(3) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = majorityElement([2,2,1,1,1,2,2]); if (!__isEqual(_r, 2)) throw new Error('Expected ' + JSON.stringify(2) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 190,
+    "title": "Reverse Bits",
+    "difficulty": "Easy",
+    "description": "<p>Reverse bits of a given 32 bits signed integer.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">n = 43261596</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">964176192</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<table>\n\t<tbody>\n\t\t<tr>\n\t\t\t<th>Integer</th>\n\t\t\t<th>Binary</th>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>43261596</td>\n\t\t\t<td>00000010100101000001111010011100</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>964176192</td>\n\t\t\t<td>00111001011110000010100101000000</td>\n\t\t</tr>\n\t</tbody>\n</table>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">n = 2147483644</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">1073741822</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<table>\n\t<tbody>\n\t\t<tr>\n\t\t\t<th>Integer</th>\n\t\t\t<th>Binary</th>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>2147483644</td>\n\t\t\t<td>01111111111111111111111111111100</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>1073741822</td>\n\t\t\t<td>00111111111111111111111111111110</td>\n\t\t</tr>\n\t</tbody>\n</table>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>0 &lt;= n &lt;= 2<sup>31</sup> - 2</code></li>\n\t<li><code>n</code> is even.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> If this function is called many times, how would you optimize it?</p>\n",
+    "starterCode": {
+      "python": "def reverseBits(n: int) -> int:",
+      "javascript": "/**\n * @param {number} n\n * @return {number}\n */\nvar reverseBits = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "assert reverseBits(43261596) is not None, 'Should not be None'",
+        "assert reverseBits(2147483644) is not None, 'Should not be None'",
+        "assert reverseBits(0) is not None, 'Should not be None'",
+        "assert reverseBits(1) is not None, 'Should not be None'",
+        "assert reverseBits(-1) is not None, 'Should not be None'",
+        "assert reverseBits(2147483647) is not None, 'Should not be None'",
+        "assert reverseBits(-2147483648) is not None, 'Should not be None'",
+        "assert reverseBits(100) is not None, 'Should not be None'",
+        "assert reverseBits(-100) is not None, 'Should not be None'",
+        "assert reverseBits(7) is not None, 'Should not be None'",
+        "assert reverseBits(13) is not None, 'Should not be None'",
+        "assert reverseBits(999) is not None, 'Should not be None'",
+        "assert reverseBits(0) is not None, 'Should not be None'",
+        "assert reverseBits(1) is not None, 'Should not be None'",
+        "assert reverseBits(-1) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = reverseBits(43261596); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(2147483644); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(1); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(-1); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(2147483647); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(-2147483648); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(100); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(-100); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(7); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(13); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(999); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(1); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = reverseBits(-1); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "topic": "Bit Manipulation",
+    "hints": [
+      "Process the 32 bits one at a time: extract the last bit of n with n & 1, shift it into the result.",
+      "Shift result left and n right on each iteration.",
+      "After 32 iterations (not until n == 0), the result holds the reversed bits."
+    ],
+    "optimalSolution": {
+      "python": "def reverseBits(n):\n    res = 0\n    for _ in range(32):\n        res = (res << 1) | (n & 1)\n        n >>= 1\n    return res",
+      "javascript": "var reverseBits = function(n) {\n    let res = 0;\n    for (let i = 0; i < 32; i++) {\n        res = (res * 2 + (n & 1)) >>> 0;\n        n >>>= 1;\n    }\n    return res >>> 0;\n};"
+    }
+  },
+  {
+    "id": 191,
+    "title": "Number of 1 Bits",
+    "difficulty": "Easy",
+    "description": "<p>Given a positive integer <code>n</code>, write a function that returns the number of <span data-keyword=\"set-bit\">set bits</span> in its binary representation (also known as the <a href=\"http://en.wikipedia.org/wiki/Hamming_weight\" target=\"_blank\">Hamming weight</a>).</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">n = 11</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">3</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>The input binary string <strong>1011</strong> has a total of three set bits.</p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">n = 128</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">1</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>The input binary string <strong>10000000</strong> has a total of one set bit.</p>\n</div>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">n = 2147483645</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">30</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>The input binary string <strong>1111111111111111111111111111101</strong> has a total of thirty set bits.</p>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 2<sup>31</sup> - 1</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow up:</strong> If this function is called many times, how would you optimize it?",
+    "starterCode": {
+      "python": "def hammingWeight(n: int) -> int:",
+      "javascript": "/**\n * @param {number} n\n * @return {number}\n */\nvar hammingWeight = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "assert hammingWeight(11) is not None, 'Should not be None'",
+        "assert hammingWeight(128) is not None, 'Should not be None'",
+        "assert hammingWeight(2147483645) is not None, 'Should not be None'",
+        "assert hammingWeight(0) is not None, 'Should not be None'",
+        "assert hammingWeight(1) is not None, 'Should not be None'",
+        "assert hammingWeight(-1) is not None, 'Should not be None'",
+        "assert hammingWeight(2147483647) is not None, 'Should not be None'",
+        "assert hammingWeight(-2147483648) is not None, 'Should not be None'",
+        "assert hammingWeight(100) is not None, 'Should not be None'",
+        "assert hammingWeight(-100) is not None, 'Should not be None'",
+        "assert hammingWeight(7) is not None, 'Should not be None'",
+        "assert hammingWeight(13) is not None, 'Should not be None'",
+        "assert hammingWeight(999) is not None, 'Should not be None'",
+        "assert hammingWeight(0) is not None, 'Should not be None'",
+        "assert hammingWeight(1) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = hammingWeight(11); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(128); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(2147483645); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(1); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(-1); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(2147483647); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(-2147483648); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(100); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(-100); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(7); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(13); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(999); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = hammingWeight(1); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "topic": "Bit Manipulation",
+    "hints": [
+      "Iterate through all 32 bits, checking each one with a mask.",
+      "Trick: n & (n-1) clears the lowest set bit. Count how many times you can do this before n = 0.",
+      "Python's bin(n).count('1') works but defeats the bit-manipulation practice."
+    ],
+    "optimalSolution": {
+      "python": "def hammingWeight(n):\n    count = 0\n    while n:\n        n &= n - 1\n        count += 1\n    return count",
+      "javascript": "var hammingWeight = function(n) {\n    let count = 0;\n    while (n) { n &= n - 1; count++; }\n    return count;\n};"
+    }
+  },
+  {
+    "id": 202,
+    "title": "Happy Number",
+    "difficulty": "Easy",
+    "topic": "Math",
+    "description": "<p>Write an algorithm to determine if a number <code>n</code> is happy.</p>\n\n<p>A <strong>happy number</strong> is a number defined by the following process:</p>\n\n<ul>\n\t<li>Starting with any positive integer, replace the number by the sum of the squares of its digits.</li>\n\t<li>Repeat the process until the number equals 1 (where it will stay), or it <strong>loops endlessly in a cycle</strong> which does not include 1.</li>\n\t<li>Those numbers for which this process <strong>ends in 1</strong> are happy.</li>\n</ul>\n\n<p>Return <code>true</code> <em>if</em> <code>n</code> <em>is a happy number, and</em> <code>false</code> <em>if not</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 19\n<strong>Output:</strong> true\n<strong>Explanation:</strong>\n1<sup>2</sup> + 9<sup>2</sup> = 82\n8<sup>2</sup> + 2<sup>2</sup> = 68\n6<sup>2</sup> + 8<sup>2</sup> = 100\n1<sup>2</sup> + 0<sup>2</sup> + 0<sup>2</sup> = 1\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 2\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 2<sup>31</sup> - 1</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def isHappy(n: int) -> bool:",
+      "javascript": "/**\n * @param {number} n\n * @return {boolean}\n */\nvar isHappy = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isHappy(19); assert _res is True, f'Expected True but got {_res}'",
+        "_res = isHappy(2); assert _res is False, f'Expected False but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isHappy(19); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()",
+        "(() => { const _r = isHappy(2); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 206,
+    "title": "Reverse Linked List",
+    "difficulty": "Easy",
+    "description": "<p>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg\" style=\"width: 542px; height: 222px;\" />\n<pre>\n<strong>Input:</strong> head = [1,2,3,4,5]\n<strong>Output:</strong> [5,4,3,2,1]\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg\" style=\"width: 182px; height: 222px;\" />\n<pre>\n<strong>Input:</strong> head = [1,2]\n<strong>Output:</strong> [2,1]\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> head = []\n<strong>Output:</strong> []\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the list is the range <code>[0, 5000]</code>.</li>\n\t<li><code>-5000 &lt;= Node.val &lt;= 5000</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>\n",
+    "starterCode": {
+      "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(val=0, next=None):\n#         self.val = val\n#         self.next = next\ndef reverseList(head: Optional[ListNode]) -> Optional[ListNode]:",
+      "javascript": "/**\n * Definition for singly-linked list.\n * function ListNode(val, next) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.next = (next===undefined ? null : next)\n * }\n */\n/**\n * @param {ListNode} head\n * @return {ListNode}\n */\nvar reverseList = function(head) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = linked_to_list(reverseList(list_to_linked([1,2,3,4,5]))); assert _res == [5,4,3,2,1], f'Expected [5,4,3,2,1] but got {_res}'",
+        "_res = linked_to_list(reverseList(list_to_linked([1,2]))); assert _res == [2,1], f'Expected [2,1] but got {_res}'",
+        "_res = linked_to_list(reverseList(list_to_linked([]))); assert _res == [], f'Expected [] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = linkedToList(reverseList(listToLinked([1,2,3,4,5]))); if (!__isEqual(_r, [5,4,3,2,1])) throw new Error('Expected ' + JSON.stringify([5,4,3,2,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = linkedToList(reverseList(listToLinked([1,2]))); if (!__isEqual(_r, [2,1])) throw new Error('Expected ' + JSON.stringify([2,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = linkedToList(reverseList(listToLinked([]))); if (!__isEqual(_r, [])) throw new Error('Expected ' + JSON.stringify([]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Linked List",
+    "hints": [
+      "Iteratively: maintain prev = null, cur = head. On each step, save next, point cur.next to prev, advance both.",
+      "Recursively: reverse the rest of the list, then make the next node point back to current.",
+      "The iterative approach is O(1) space; the recursive approach uses O(n) stack space."
+    ],
+    "optimalSolution": {
+      "python": "def reverseList(head):\n    prev, cur = None, head\n    while cur:\n        nxt = cur.next\n        cur.next = prev\n        prev = cur\n        cur = nxt\n    return prev",
+      "javascript": "var reverseList = function(head) {\n    let prev = null, cur = head;\n    while (cur) {\n        const nxt = cur.next;\n        cur.next = prev;\n        prev = cur;\n        cur = nxt;\n    }\n    return prev;\n};"
+    }
+  },
+  {
+    "id": 217,
+    "title": "Contains Duplicate",
+    "difficulty": "Easy",
+    "description": "<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [1,2,3,1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>The element 1 occurs at the indices 0 and 3.</p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [1,2,3,4]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">false</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>All elements are distinct.</p>\n</div>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [1,1,1,3,3,4,3,2,4,2]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def containsDuplicate(nums: List[int]) -> bool:",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {boolean}\n */\nvar containsDuplicate = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_nums = list(range(10000)) + [0]; assert containsDuplicate(_nums) is True, 'Stress test failed'"
+      ],
+      "javascript": [
+        "(() => { const _nums = Array.from({length: 10000}, (_, i) => i); _nums.push(0); if (!containsDuplicate(_nums)) throw new Error('Stress test failed'); return true; })()"
+      ]
+    },
+    "topic": "Arrays",
+    "hints": [
+      "If any value appears twice, a set will be smaller than the array.",
+      "You can also iterate and add to a set — return True the moment you try to add something already in it.",
+      "Sorting first makes duplicates adjacent, but that's O(n log n); a hash set is O(n)."
+    ],
+    "optimalSolution": {
+      "python": "def containsDuplicate(nums):\n    return len(nums) != len(set(nums))",
+      "javascript": "var containsDuplicate = function(nums) {\n    return new Set(nums).size !== nums.length;\n};"
+    }
+  },
+  {
+    "id": 226,
+    "title": "Invert Binary Tree",
+    "difficulty": "Easy",
+    "description": "<p>Given the <code>root</code> of a binary tree, invert the tree, and return <em>its root</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/14/invert1-tree.jpg\" style=\"width: 500px; height: 165px;\" />\n<pre>\n<strong>Input:</strong> root = [4,2,7,1,3,6,9]\n<strong>Output:</strong> [4,7,2,9,6,3,1]\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/14/invert2-tree.jpg\" style=\"width: 500px; height: 120px;\" />\n<pre>\n<strong>Input:</strong> root = [2,1,3]\n<strong>Output:</strong> [2,3,1]\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> root = []\n<strong>Output:</strong> []\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>\n\t<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @return {TreeNode}\n */\nvar invertTree = function(root) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = tree_to_list(invertTree(list_to_tree([4,2,7,1,3,6,9]))); assert _res == [4,7,2,9,6,3,1], f'Expected [4,7,2,9,6,3,1] but got {_res}'",
+        "_res = tree_to_list(invertTree(list_to_tree([2,1,3]))); assert _res == [2,3,1], f'Expected [2,3,1] but got {_res}'",
+        "_res = tree_to_list(invertTree(list_to_tree([]))); assert _res == [], f'Expected [] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = treeToList(invertTree(listToTree([4,2,7,1,3,6,9]))); if (!__isEqual(_r, [4,7,2,9,6,3,1])) throw new Error('Expected ' + JSON.stringify([4,7,2,9,6,3,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = treeToList(invertTree(listToTree([2,1,3]))); if (!__isEqual(_r, [2,3,1])) throw new Error('Expected ' + JSON.stringify([2,3,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = treeToList(invertTree(listToTree([]))); if (!__isEqual(_r, [])) throw new Error('Expected ' + JSON.stringify([]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Trees",
+    "hints": [
+      "Swap the left and right children of every node.",
+      "Recursively invert the left subtree, invert the right subtree, then swap.",
+      "You can also do this iteratively with a queue (BFS) or stack (DFS)."
+    ],
+    "optimalSolution": {
+      "python": "def invertTree(root):\n    if not root: return None\n    root.left, root.right = invertTree(root.right), invertTree(root.left)\n    return root",
+      "javascript": "var invertTree = function(root) {\n    if (!root) return null;\n    [root.left, root.right] = [invertTree(root.right), invertTree(root.left)];\n    return root;\n};"
+    }
+  },
+  {
+    "id": 231,
+    "title": "Power of Two",
+    "difficulty": "Easy",
+    "topic": "Bit Manipulation",
+    "description": "<p>Given an integer <code>n</code>, return <em><code>true</code> if it is a power of two. Otherwise, return <code>false</code></em>.</p>\n\n<p>An integer <code>n</code> is a power of two, if there exists an integer <code>x</code> such that <code>n == 2<sup>x</sup></code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 1\n<strong>Output:</strong> true\n<strong>Explanation: </strong>2<sup>0</sup> = 1\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 16\n<strong>Output:</strong> true\n<strong>Explanation: </strong>2<sup>4</sup> = 16\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 3\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>-2<sup>31</sup> &lt;= n &lt;= 2<sup>31</sup> - 1</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow up:</strong> Could you solve it without loops/recursion?",
+    "starterCode": {
+      "python": "def isPowerOfTwo(n: int) -> bool:",
+      "javascript": "/**\n * @param {number} n\n * @return {boolean}\n */\nvar isPowerOfTwo = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isPowerOfTwo(1); assert _res is True, f'Expected True but got {_res}'",
+        "_res = isPowerOfTwo(16); assert _res is True, f'Expected True but got {_res}'",
+        "_res = isPowerOfTwo(3); assert _res is False, f'Expected False but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isPowerOfTwo(1); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()",
+        "(() => { const _r = isPowerOfTwo(16); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()",
+        "(() => { const _r = isPowerOfTwo(3); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 242,
+    "title": "Valid Anagram",
+    "difficulty": "Easy",
+    "description": "<p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>t</code> is an <span data-keyword=\"anagram\">anagram</span> of <code>s</code>, and <code>false</code> otherwise.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;anagram&quot;, t = &quot;nagaram&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">true</span></p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">s = &quot;rat&quot;, t = &quot;car&quot;</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">false</span></p>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length, t.length &lt;= 5 * 10<sup>4</sup></code></li>\n\t<li><code>s</code> and <code>t</code> consist of lowercase English letters.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>\n",
+    "starterCode": {
+      "python": "def isAnagram(s: str, t: str) -> bool:",
+      "javascript": "/**\n * @param {string} s\n * @param {string} t\n * @return {boolean}\n */\nvar isAnagram = function(s, t) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_s1 = 'a' * 15000 + 'b'; _s2 = 'b' + 'a' * 15000; assert isAnagram(_s1, _s2) is True, 'Stress test failed'"
+      ],
+      "javascript": [
+        "(() => { const _s1 = 'a'.repeat(15000) + 'b'; const _s2 = 'b' + 'a'.repeat(15000); if (!isAnagram(_s1, _s2)) throw new Error('Stress test failed'); return true; })()"
+      ]
+    },
+    "topic": "String",
+    "hints": [
+      "Two strings are anagrams if they have the same character frequencies.",
+      "Sort both strings and compare — but that's O(n log n).",
+      "Better: use a frequency counter (hash map or fixed-size array for 26 letters), increment for s, decrement for t, check all zeros."
+    ],
+    "optimalSolution": {
+      "python": "from collections import Counter\ndef isAnagram(s, t):\n    return Counter(s) == Counter(t)",
+      "javascript": "var isAnagram = function(s, t) {\n    if (s.length !== t.length) return false;\n    const count = {};\n    for (const c of s) count[c] = (count[c] || 0) + 1;\n    for (const c of t) {\n        if (!count[c]) return false;\n        count[c]--;\n    }\n    return true;\n};"
+    }
+  },
+  {
+    "id": 252,
+    "title": "Meeting Rooms",
+    "difficulty": "Easy",
+    "description": "",
+    "starterCode": {
+      "python": "def canAttendMeetings(intervals: list[list[int]]) -> bool:\n    pass",
+      "javascript": "/**\n * @param {number[][]} intervals\n * @return {boolean}\n */\nvar canAttendMeetings = function(intervals) {\n\n};"
+    },
+    "testCases": {
+      "python": [
+        "assert canAttendMeetings([[0, 30], [5, 10], [15, 20]]) is not None, 'Should not be None'",
+        "assert canAttendMeetings([[7, 10], [2, 4]]) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'",
+        "assert canAttendMeetings(0) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = canAttendMeetings([[0, 30], [5, 10], [15, 20]]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings([[7, 10], [2, 4]]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = canAttendMeetings(0); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "topic": "Intervals",
+    "hints": [
+      "Sort intervals by start time.",
+      "Check each adjacent pair — if the next meeting starts before the current one ends, there's a conflict.",
+      "One overlap found means return false immediately."
+    ],
+    "optimalSolution": {
+      "python": "def canAttendMeetings(intervals):\n    intervals.sort()\n    for i in range(1, len(intervals)):\n        if intervals[i][0] < intervals[i-1][1]:\n            return False\n    return True",
+      "javascript": "var canAttendMeetings = function(intervals) {\n    intervals.sort((a, b) => a[0] - b[0]);\n    for (let i = 1; i < intervals.length; i++)\n        if (intervals[i][0] < intervals[i-1][1]) return false;\n    return true;\n};"
+    }
+  },
+  {
+    "id": 268,
+    "title": "Missing Number",
+    "difficulty": "Easy",
+    "description": "<p>Given an array <code>nums</code> containing <code>n</code> distinct numbers in the range <code>[0, n]</code>, return <em>the only number in the range that is missing from the array.</em></p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [3,0,1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">2</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p><code>n = 3</code> since there are 3 numbers, so all numbers are in the range <code>[0,3]</code>. 2 is the missing number in the range since it does not appear in <code>nums</code>.</p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [0,1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">2</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p><code>n = 2</code> since there are 2 numbers, so all numbers are in the range <code>[0,2]</code>. 2 is the missing number in the range since it does not appear in <code>nums</code>.</p>\n</div>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong> <span class=\"example-io\">nums = [9,6,4,2,3,5,7,0,1]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">8</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p><code>n = 9</code> since there are 9 numbers, so all numbers are in the range <code>[0,9]</code>. 8 is the missing number in the range since it does not appear in <code>nums</code>.</p>\n</div>\n\n<div class=\"simple-translate-system-theme\" id=\"simple-translate\">\n<div>\n<div class=\"simple-translate-button isShow\" style=\"background-image: url(&quot;moz-extension://8a9ffb6b-7e69-4e93-aae1-436a1448eff6/icons/512.png&quot;); height: 22px; width: 22px; top: 318px; left: 36px;\">&nbsp;</div>\n\n<div class=\"simple-translate-panel \" style=\"width: 300px; height: 200px; top: 0px; left: 0px; font-size: 13px;\">\n<div class=\"simple-translate-result-wrapper\" style=\"overflow: hidden;\">\n<div class=\"simple-translate-move\" draggable=\"true\">&nbsp;</div>\n\n<div class=\"simple-translate-result-contents\">\n<p class=\"simple-translate-result\" dir=\"auto\">&nbsp;</p>\n\n<p class=\"simple-translate-candidate\" dir=\"auto\">&nbsp;</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>n == nums.length</code></li>\n\t<li><code>1 &lt;= n &lt;= 10<sup>4</sup></code></li>\n\t<li><code>0 &lt;= nums[i] &lt;= n</code></li>\n\t<li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>\n",
+    "starterCode": {
+      "python": "def missingNumber(nums: List[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar missingNumber = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "assert missingNumber([3, 0, 1]) is not None, 'Should not be None'",
+        "assert missingNumber([0, 1]) is not None, 'Should not be None'",
+        "assert missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]) is not None, 'Should not be None'",
+        "assert missingNumber([]) is not None, 'Should not be None'",
+        "assert missingNumber([0]) is not None, 'Should not be None'",
+        "assert missingNumber([-1]) is not None, 'Should not be None'",
+        "assert missingNumber([1000000, -1000000]) is not None, 'Should not be None'",
+        "assert missingNumber([1, 1, 1, 1]) is not None, 'Should not be None'",
+        "assert missingNumber([42, -51]) is not None, 'Should not be None'",
+        "assert missingNumber([-71, -26, -17, 84, 29]) is not None, 'Should not be None'",
+        "assert missingNumber([0, 6, 0, 3, 5, 8]) is not None, 'Should not be None'",
+        "assert missingNumber([-100, -49, 52, 55, 100]) is not None, 'Should not be None'",
+        "assert missingNumber([83, 79, 69, 61, -47]) is not None, 'Should not be None'",
+        "assert missingNumber([]) is not None, 'Should not be None'",
+        "assert missingNumber([0]) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = missingNumber([3, 0, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([0, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([0]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([-1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([1000000, -1000000]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([1, 1, 1, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([42, -51]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([-71, -26, -17, 84, 29]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([0, 6, 0, 3, 5, 8]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([-100, -49, 52, 55, 100]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([83, 79, 69, 61, -47]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = missingNumber([0]); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "topic": "Bit Manipulation",
+    "hints": [
+      "Expected sum of [0..n] = n*(n+1)/2. Subtract the actual array sum — the difference is the missing number.",
+      "XOR approach: XOR all indices 0..n, then XOR all array values; duplicates cancel, leaving the missing number.",
+      "Both approaches are O(n) time, O(1) space."
+    ],
+    "optimalSolution": {
+      "python": "def missingNumber(nums):\n    n = len(nums)\n    return n * (n + 1) // 2 - sum(nums)",
+      "javascript": "var missingNumber = function(nums) {\n    const n = nums.length;\n    return n * (n + 1) / 2 - nums.reduce((a, b) => a + b, 0);\n};"
+    }
+  },
+  {
+    "id": 283,
+    "title": "Move Zeroes",
+    "difficulty": "Easy",
+    "topic": "Arrays",
+    "description": "<p>Given an integer array <code>nums</code>, move all <code>0</code>&#39;s to the end of it while maintaining the relative order of the non-zero elements.</p>\n\n<p><strong>Note</strong> that you must do this in-place without making a copy of the array.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> nums = [0,1,0,3,12]\n<strong>Output:</strong> [1,3,12,0,0]\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> nums = [0]\n<strong>Output:</strong> [0]\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>-2<sup>31</sup> &lt;= nums[i] &lt;= 2<sup>31</sup> - 1</code></li>\n</ul>\n\n<p>&nbsp;</p>\n<strong>Follow up:</strong> Could you minimize the total number of operations done?",
+    "starterCode": {
+      "python": "def moveZeroes(nums: list[int]) -> None:\n    \"\"\"\n    Do not return anything, modify nums in-place instead.\n    \"\"\"",
+      "javascript": "/**\n * @param {number[]} nums\n * @return {void} Do not return anything, modify nums in-place instead.\n */\nvar moveZeroes = function(nums) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = moveZeroes([0,1,0,3,12]); assert _res == [1,3,12,0,0], f'Expected [1,3,12,0,0] but got {_res}'",
+        "_res = moveZeroes([0]); assert _res == [0], f'Expected [0] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = moveZeroes([0,1,0,3,12]); if (!__isEqual(_r, [1,3,12,0,0])) throw new Error('Expected ' + JSON.stringify([1,3,12,0,0]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = moveZeroes([0]); if (!__isEqual(_r, [0])) throw new Error('Expected ' + JSON.stringify([0]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "<b>In-place</b> means we should not be allocating any space for extra array. But we are allowed to modify the existing array. However, as a first step, try coming up with a solution that makes use of additional space. For this problem as well, first apply the idea discussed using an additional array and the in-place solution will pop up eventually.",
+      "A <b>two-pointer</b> approach could be helpful here. The idea would be to have one pointer for iterating the array and another pointer that just works on the non-zero elements of the array."
+    ]
+  },
+  {
+    "id": 338,
+    "title": "Counting Bits",
+    "difficulty": "Easy",
+    "description": "<p>Given an integer <code>n</code>, return <em>an array </em><code>ans</code><em> of length </em><code>n + 1</code><em> such that for each </em><code>i</code><em> </em>(<code>0 &lt;= i &lt;= n</code>)<em>, </em><code>ans[i]</code><em> is the <strong>number of </strong></em><code>1</code><em><strong>&#39;s</strong> in the binary representation of </em><code>i</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 2\n<strong>Output:</strong> [0,1,1]\n<strong>Explanation:</strong>\n0 --&gt; 0\n1 --&gt; 1\n2 --&gt; 10\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> n = 5\n<strong>Output:</strong> [0,1,1,2,1,2]\n<strong>Explanation:</strong>\n0 --&gt; 0\n1 --&gt; 1\n2 --&gt; 10\n3 --&gt; 11\n4 --&gt; 100\n5 --&gt; 101\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>0 &lt;= n &lt;= 10<sup>5</sup></code></li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong></p>\n\n<ul>\n\t<li>It is very easy to come up with a solution with a runtime of <code>O(n log n)</code>. Can you do it in linear time <code>O(n)</code> and possibly in a single pass?</li>\n\t<li>Can you do it without using any built-in function (i.e., like <code>__builtin_popcount</code> in C++)?</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def countBits(n: int) -> List[int]:",
+      "javascript": "/**\n * @param {number} n\n * @return {number[]}\n */\nvar countBits = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = countBits(2); assert _res == [0,1,1], f'Expected [0,1,1] but got {_res}'",
+        "_res = countBits(5); assert _res == [0,1,1,2,1,2], f'Expected [0,1,1,2,1,2] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = countBits(2); if (!__isEqual(_r, [0,1,1])) throw new Error('Expected ' + JSON.stringify([0,1,1]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = countBits(5); if (!__isEqual(_r, [0,1,1,2,1,2])) throw new Error('Expected ' + JSON.stringify([0,1,1,2,1,2]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Bit Manipulation",
+    "hints": [
+      "dp[i] = dp[i >> 1] + (i & 1): the count for i equals the count for i//2, plus 1 if i is odd.",
+      "This works because shifting right removes the last bit; the & 1 adds it back if it was 1.",
+      "O(n) time, O(n) output space — no bit-counting loop needed."
+    ],
+    "optimalSolution": {
+      "python": "def countBits(n):\n    dp = [0] * (n + 1)\n    for i in range(1, n + 1):\n        dp[i] = dp[i >> 1] + (i & 1)\n    return dp",
+      "javascript": "var countBits = function(n) {\n    const dp = new Array(n + 1).fill(0);\n    for (let i = 1; i <= n; i++) dp[i] = dp[i >> 1] + (i & 1);\n    return dp;\n};"
+    }
+  },
+  {
+    "id": 344,
+    "title": "Reverse String",
+    "difficulty": "Easy",
+    "topic": "Two Pointers",
+    "description": "<p>Write a function that reverses a string. The input string is given as an array of characters <code>s</code>.</p>\n\n<p>You must do this by modifying the input array <a href=\"https://en.wikipedia.org/wiki/In-place_algorithm\" target=\"_blank\">in-place</a> with <code>O(1)</code> extra memory.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> s = [\"h\",\"e\",\"l\",\"l\",\"o\"]\n<strong>Output:</strong> [\"o\",\"l\",\"l\",\"e\",\"h\"]\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> s = [\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]\n<strong>Output:</strong> [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"]\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= s.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>s[i]</code> is a <a href=\"https://en.wikipedia.org/wiki/ASCII#Printable_characters\" target=\"_blank\">printable ascii character</a>.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def reverseString(s: list[str]) -> None:\n    \"\"\"\n    Do not return anything, modify s in-place instead.\n    \"\"\"",
+      "javascript": "/**\n * @param {character[]} s\n * @return {void} Do not return anything, modify s in-place instead.\n */\nvar reverseString = function(s) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = reverseString([\"h\",\"e\",\"l\",\"l\",\"o\"]); assert _res == [\"o\",\"l\",\"l\",\"e\",\"h\"], f'Expected [\"o\",\"l\",\"l\",\"e\",\"h\"] but got {_res}'",
+        "_res = reverseString([\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]); assert _res == [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"], f'Expected [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = reverseString([\"h\",\"e\",\"l\",\"l\",\"o\"]); if (!__isEqual(_r, [\"o\",\"l\",\"l\",\"e\",\"h\"])) throw new Error('Expected ' + JSON.stringify([\"o\",\"l\",\"l\",\"e\",\"h\"]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = reverseString([\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]); if (!__isEqual(_r, [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"])) throw new Error('Expected ' + JSON.stringify([\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "The entire logic for reversing a string is based on using the opposite directional two-pointer approach!"
+    ]
+  },
+  {
+    "id": 383,
+    "title": "Ransom Note",
+    "difficulty": "Easy",
+    "topic": "String",
+    "description": "<p>Given two strings <code>ransomNote</code> and <code>magazine</code>, return <code>true</code><em> if </em><code>ransomNote</code><em> can be constructed by using the letters from </em><code>magazine</code><em> and </em><code>false</code><em> otherwise</em>.</p>\n\n<p>Each letter in <code>magazine</code> can only be used once in <code>ransomNote</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> ransomNote = \"a\", magazine = \"b\"\n<strong>Output:</strong> false\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> ransomNote = \"aa\", magazine = \"ab\"\n<strong>Output:</strong> false\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> ransomNote = \"aa\", magazine = \"aab\"\n<strong>Output:</strong> true\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= ransomNote.length, magazine.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>ransomNote</code> and <code>magazine</code> consist of lowercase English letters.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "def canConstruct(ransomNote: str, magazine: str) -> bool:",
+      "javascript": "/**\n * @param {string} ransomNote\n * @param {string} magazine\n * @return {boolean}\n */\nvar canConstruct = function(ransomNote, magazine) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = canConstruct(\"a\", \"b\"); assert _res is False, f'Expected False but got {_res}'",
+        "_res = canConstruct(\"aa\", \"ab\"); assert _res is False, f'Expected False but got {_res}'",
+        "_res = canConstruct(\"aa\", \"aab\"); assert _res is True, f'Expected True but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = canConstruct(\"a\", \"b\"); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()",
+        "(() => { const _r = canConstruct(\"aa\", \"ab\"); if (_r !== false) throw new Error('Expected false but got ' + _r); return true; })()",
+        "(() => { const _r = canConstruct(\"aa\", \"aab\"); if (_r !== true) throw new Error('Expected true but got ' + _r); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 412,
+    "title": "Fizz Buzz",
+    "difficulty": "Easy",
+    "topic": "Math",
+    "description": "<p>Given an integer <code>n</code>, return <em>a string array </em><code>answer</code><em> (<strong>1-indexed</strong>) where</em>:</p>\n\n<ul>\n\t<li><code>answer[i] == &quot;FizzBuzz&quot;</code> if <code>i</code> is divisible by <code>3</code> and <code>5</code>.</li>\n\t<li><code>answer[i] == &quot;Fizz&quot;</code> if <code>i</code> is divisible by <code>3</code>.</li>\n\t<li><code>answer[i] == &quot;Buzz&quot;</code> if <code>i</code> is divisible by <code>5</code>.</li>\n\t<li><code>answer[i] == i</code> (as a string) if none of the above conditions are true.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> n = 3\n<strong>Output:</strong> [\"1\",\"2\",\"Fizz\"]\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> n = 5\n<strong>Output:</strong> [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> n = 15\n<strong>Output:</strong> [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"]\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def fizzBuzz(n: int) -> list[str]:",
+      "javascript": "/**\n * @param {number} n\n * @return {string[]}\n */\nvar fizzBuzz = function(n) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = fizzBuzz(3); assert _res == [\"1\",\"2\",\"Fizz\"], f'Expected [\"1\",\"2\",\"Fizz\"] but got {_res}'",
+        "_res = fizzBuzz(5); assert _res == [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"], f'Expected [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"] but got {_res}'",
+        "_res = fizzBuzz(15); assert _res == [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"], f'Expected [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"] but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = fizzBuzz(3); if (!__isEqual(_r, [\"1\",\"2\",\"Fizz\"])) throw new Error('Expected ' + JSON.stringify([\"1\",\"2\",\"Fizz\"]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = fizzBuzz(5); if (!__isEqual(_r, [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"])) throw new Error('Expected ' + JSON.stringify([\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = fizzBuzz(15); if (!__isEqual(_r, [\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"])) throw new Error('Expected ' + JSON.stringify([\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"]) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 543,
+    "title": "Diameter of Binary Tree",
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "description": "<p>Given the <code>root</code> of a binary tree, return <em>the length of the <strong>diameter</strong> of the tree</em>.</p>\n\n<p>The <strong>diameter</strong> of a binary tree is the <strong>length</strong> of the longest path between any two nodes in a tree. This path may or may not pass through the <code>root</code>.</p>\n\n<p>The <strong>length</strong> of a path between two nodes is represented by the number of edges between them.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/06/diamtree.jpg\" style=\"width: 292px; height: 302px;\" />\n<pre>\n<strong>Input:</strong> root = [1,2,3,4,5]\n<strong>Output:</strong> 3\n<strong>Explanation:</strong> 3 is the length of the path [4,2,1,3] or [5,2,1,3].\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> root = [1,2]\n<strong>Output:</strong> 1\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the tree is in the range <code>[1, 10<sup>4</sup>]</code>.</li>\n\t<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef diameterOfBinaryTree(root: Optional[TreeNode]) -> int:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @return {number}\n */\nvar diameterOfBinaryTree = function(root) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = diameterOfBinaryTree(list_to_tree([1,2,3,4,5])); assert _res == 3, f'Expected 3 but got {_res}'",
+        "_res = diameterOfBinaryTree(list_to_tree([1,2])); assert _res == 1, f'Expected 1 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = diameterOfBinaryTree(listToTree([1,2,3,4,5])); if (!__isEqual(_r, 3)) throw new Error('Expected ' + JSON.stringify(3) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = diameterOfBinaryTree(listToTree([1,2])); if (!__isEqual(_r, 1)) throw new Error('Expected ' + JSON.stringify(1) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 572,
+    "title": "Subtree of Another Tree",
+    "difficulty": "Easy",
+    "description": "<p>Given the roots of two binary trees <code>root</code> and <code>subRoot</code>, return <code>true</code> if there is a subtree of <code>root</code> with the same structure and node values of<code> subRoot</code> and <code>false</code> otherwise.</p>\n\n<p>A subtree of a binary tree <code>tree</code> is a tree that consists of a node in <code>tree</code> and all of this node&#39;s descendants. The tree <code>tree</code> could also be considered as a subtree of itself.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/04/28/subtree1-tree.jpg\" style=\"width: 532px; height: 400px;\" />\n<pre>\n<strong>Input:</strong> root = [3,4,5,1,2], subRoot = [4,1,2]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/04/28/subtree2-tree.jpg\" style=\"width: 502px; height: 458px;\" />\n<pre>\n<strong>Input:</strong> root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li>The number of nodes in the <code>root</code> tree is in the range <code>[1, 2000]</code>.</li>\n\t<li>The number of nodes in the <code>subRoot</code> tree is in the range <code>[1, 1000]</code>.</li>\n\t<li><code>-10<sup>4</sup> &lt;= root.val &lt;= 10<sup>4</sup></code></li>\n\t<li><code>-10<sup>4</sup> &lt;= subRoot.val &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\ndef isSubtree(root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:",
+      "javascript": "/**\n * Definition for a binary tree node.\n * function TreeNode(val, left, right) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.left = (left===undefined ? null : left)\n *     this.right = (right===undefined ? null : right)\n * }\n */\n/**\n * @param {TreeNode} root\n * @param {TreeNode} subRoot\n * @return {boolean}\n */\nvar isSubtree = function(root, subRoot) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = isSubtree(list_to_tree([3,4,5,1,2]), list_to_tree([4,1,2])); assert _res == true, f'Expected true but got {_res}'",
+        "_res = isSubtree(list_to_tree([3,4,5,1,2,None,None,None,None,0]), list_to_tree([4,1,2])); assert _res == false, f'Expected false but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = isSubtree(listToTree([3,4,5,1,2]), listToTree([4,1,2])); if (!__isEqual(_r, true)) throw new Error('Expected ' + JSON.stringify(true) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = isSubtree(listToTree([3,4,5,1,2,null,null,null,null,0]), listToTree([4,1,2])); if (!__isEqual(_r, false)) throw new Error('Expected ' + JSON.stringify(false) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "topic": "Trees",
+    "hints": [
+      "At each node of root, check if the subtree rooted there is identical to subRoot.",
+      "Use your isSameTree helper — check it at every node of root.",
+      "Recursively try root.left and root.right if the current node doesn't match."
+    ],
+    "optimalSolution": {
+      "python": "def isSubtree(root, subRoot):\n    def same(a, b):\n        if not a and not b: return True\n        if not a or not b or a.val != b.val: return False\n        return same(a.left, b.left) and same(a.right, b.right)\n    if not root: return False\n    if same(root, subRoot): return True\n    return isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)",
+      "javascript": "var isSubtree = function(root, subRoot) {\n    function same(a, b) {\n        if (!a && !b) return true;\n        if (!a || !b || a.val !== b.val) return false;\n        return same(a.left, b.left) && same(a.right, b.right);\n    }\n    if (!root) return false;\n    if (same(root, subRoot)) return true;\n    return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);\n};"
+    }
+  },
+  {
+    "id": 789,
+    "title": "Kth Largest Element in a Stream",
+    "difficulty": "Easy",
+    "topic": "Heap",
+    "description": "<p>You are part of a university admissions office and need to keep track of the <code>kth</code> highest test score from applicants in real-time. This helps to determine cut-off marks for interviews and admissions dynamically as new applicants submit their scores.</p>\n\n<p>You are tasked to implement a class which, for a given integer&nbsp;<code>k</code>, maintains a stream of test scores and continuously returns the&nbsp;<code>k</code>th highest test score&nbsp;<strong>after</strong>&nbsp;a new score has been submitted. More specifically, we are looking for the <code>k</code>th highest score in the sorted list of all scores.</p>\n\n<p>Implement the&nbsp;<code>KthLargest</code> class:</p>\n\n<ul>\n\t<li><code>KthLargest(int k, int[] nums)</code> Initializes the object with the integer <code>k</code> and the stream of test scores&nbsp;<code>nums</code>.</li>\n\t<li><code>int add(int val)</code> Adds a new test score&nbsp;<code>val</code> to the stream and returns the element representing the <code>k<sup>th</sup></code> largest element in the pool of test scores so far.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong><br />\n<span class=\"example-io\">[&quot;KthLargest&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;]<br />\n[[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">[null, 4, 5, 5, 8, 8]</span></p>\n\n<p><strong>Explanation:</strong></p>\n\n<p>KthLargest kthLargest = new KthLargest(3, [4, 5, 8, 2]);<br />\nkthLargest.add(3); // return 4<br />\nkthLargest.add(5); // return 5<br />\nkthLargest.add(10); // return 5<br />\nkthLargest.add(9); // return 8<br />\nkthLargest.add(4); // return 8</p>\n</div>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<div class=\"example-block\">\n<p><strong>Input:</strong><br />\n<span class=\"example-io\">[&quot;KthLargest&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;]<br />\n[[4, [7, 7, 7, 7, 8, 3]], [2], [10], [9], [9]]</span></p>\n\n<p><strong>Output:</strong> <span class=\"example-io\">[null, 7, 7, 7, 8]</span></p>\n\n<p><strong>Explanation:</strong></p>\nKthLargest kthLargest = new KthLargest(4, [7, 7, 7, 7, 8, 3]);<br />\nkthLargest.add(2); // return 7<br />\nkthLargest.add(10); // return 7<br />\nkthLargest.add(9); // return 7<br />\nkthLargest.add(9); // return 8</div>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>0 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>1 &lt;= k &lt;= nums.length + 1</code></li>\n\t<li><code>-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>\n\t<li><code>-10<sup>4</sup> &lt;= val &lt;= 10<sup>4</sup></code></li>\n\t<li>At most <code>10<sup>4</sup></code> calls will be made to <code>add</code>.</li>\n</ul>\n",
+    "starterCode": {
+      "python": "class KthLargest:\n\n    def __init__(k: int, nums: list[int]):\n        \n\n    def add(val: int) -> int:\n        \n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)",
+      "javascript": "/**\n * @param {number} k\n * @param {number[]} nums\n */\nvar KthLargest = function(k, nums) {\n    \n};\n\n/** \n * @param {number} val\n * @return {number}\n */\nKthLargest.prototype.add = function(val) {\n    \n};\n\n/** \n * Your KthLargest object will be instantiated and called as such:\n * var obj = new KthLargest(k, nums)\n * var param_1 = obj.add(val)\n */"
+    },
+    "testCases": {
+      "python": [
+        "assert kth_largest_element_in_a_stream([\"KthLargest\", \"add\", \"add\", \"add\", \"add\", \"add\"], [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([\"KthLargest\", \"add\", \"add\", \"add\", \"add\"], [[4, [7, 7, 7, 7, 8, 3]], [2], [10], [9], [9]]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([], [0]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([0], [-1]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([-1], [1000000, -1000000]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([1000000, -1000000], [1, 1, 1, 1]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([1, 1, 1, 1], [9, -10]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([-64, 68], [2, -86, -5, -33, -88]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([-67, 83, -44, -12, -40], [9, 5, 3, 6, 6, 5]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([9, 4, 1, 2, 9, 4], [-15, 1, 4, 37, 62]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([-88, -26, 2, 8, 35], [52, 26, 17, -95, -97]) is not None, 'Should not be None'",
+        "assert kth_largest_element_in_a_stream([-1, -1, -45, -54, -59], []) is not None, 'Should not be None'"
+      ],
+      "javascript": [
+        "(() => { const _r = kth_largest_element_in_a_stream([\"KthLargest\", \"add\", \"add\", \"add\", \"add\", \"add\"], [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([\"KthLargest\", \"add\", \"add\", \"add\", \"add\"], [[4, [7, 7, 7, 7, 8, 3]], [2], [10], [9], [9]]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([], [0]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([0], [-1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([-1], [1000000, -1000000]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([1000000, -1000000], [1, 1, 1, 1]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([1, 1, 1, 1], [9, -10]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([-64, 68], [2, -86, -5, -33, -88]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([-67, 83, -44, -12, -40], [9, 5, 3, 6, 6, 5]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([9, 4, 1, 2, 9, 4], [-15, 1, 4, 37, 62]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([-88, -26, 2, 8, 35], [52, 26, 17, -95, -97]); if (_r === undefined) throw new Error('Got undefined'); return true; })()",
+        "(() => { const _r = kth_largest_element_in_a_stream([-1, -1, -45, -54, -59], []); if (_r === undefined) throw new Error('Got undefined'); return true; })()"
+      ]
+    },
+    "hints": []
+  },
+  {
+    "id": 1127,
+    "title": "Last Stone Weight",
+    "difficulty": "Easy",
+    "topic": "Heap",
+    "description": "<p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the <code>i<sup>th</sup></code> stone.</p>\n\n<p>We are playing a game with the stones. On each turn, we choose the <strong>heaviest two stones</strong> and smash them together. Suppose the heaviest two stones have weights <code>x</code> and <code>y</code> with <code>x &lt;= y</code>. The result of this smash is:</p>\n\n<ul>\n\t<li>If <code>x == y</code>, both stones are destroyed, and</li>\n\t<li>If <code>x != y</code>, the stone of weight <code>x</code> is destroyed, and the stone of weight <code>y</code> has new weight <code>y - x</code>.</li>\n</ul>\n\n<p>At the end of the game, there is <strong>at most one</strong> stone left.</p>\n\n<p>Return <em>the weight of the last remaining stone</em>. If there are no stones left, return <code>0</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> stones = [2,7,4,1,8,1]\n<strong>Output:</strong> 1\n<strong>Explanation:</strong> \nWe combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then,\nwe combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then,\nwe combine 2 and 1 to get 1 so the array converts to [1,1,1] then,\nwe combine 1 and 1 to get 0 so the array converts to [1] then that&#39;s the value of the last stone.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> stones = [1]\n<strong>Output:</strong> 1\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= stones.length &lt;= 30</code></li>\n\t<li><code>1 &lt;= stones[i] &lt;= 1000</code></li>\n</ul>\n",
+    "starterCode": {
+      "python": "def lastStoneWeight(stones: list[int]) -> int:",
+      "javascript": "/**\n * @param {number[]} stones\n * @return {number}\n */\nvar lastStoneWeight = function(stones) {\n    \n};"
+    },
+    "testCases": {
+      "python": [
+        "_res = lastStoneWeight([2,7,4,1,8,1]); assert _res == 1, f'Expected 1 but got {_res}'",
+        "_res = lastStoneWeight([1]); assert _res == 1, f'Expected 1 but got {_res}'"
+      ],
+      "javascript": [
+        "(() => { const _r = lastStoneWeight([2,7,4,1,8,1]); if (!__isEqual(_r, 1)) throw new Error('Expected ' + JSON.stringify(1) + ' but got ' + JSON.stringify(_r)); return true; })()",
+        "(() => { const _r = lastStoneWeight([1]); if (!__isEqual(_r, 1)) throw new Error('Expected ' + JSON.stringify(1) + ' but got ' + JSON.stringify(_r)); return true; })()"
+      ]
+    },
+    "hints": [
+      "Simulate the process.  We can do it with a heap, or by sorting some list of stones every time we take a turn."
+    ]
+  }
+]
