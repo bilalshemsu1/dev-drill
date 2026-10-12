@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "releaseDate": "2026-10-12",
   "notes": "Initial standalone desktop release with Swiss Minimalist design, Pyodide offline execution, and dual-layer data persistence.",
-  "resourcesURL": "https://raw.githubusercontent.com/che4goud/offcode/master/releases/resources.neu"
+  "resourcesURL": "https://raw.githubusercontent.com/bilalshemsu1/dev-drill/main/releases/resources.neu"
 }

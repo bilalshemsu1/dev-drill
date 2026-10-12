@@ -6,7 +6,7 @@
 export const CURRENT_VERSION = '1.0.0';
 
 // Configurable manifest endpoint pointing to your GitHub repository
-export const DEFAULT_MANIFEST_URL = 'https://raw.githubusercontent.com/che4goud/offcode/master/releases/version.json';
+export const DEFAULT_MANIFEST_URL = 'https://raw.githubusercontent.com/bilalshemsu1/dev-drill/main/releases/version.json';
 
 /**
  * Compare two semver strings (e.g. '1.0.1' vs '1.0.0')

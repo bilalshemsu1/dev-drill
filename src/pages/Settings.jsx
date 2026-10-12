@@ -26,6 +26,7 @@ export default function Settings() {
 
     // Editor settings state
     const [fontSize, setFontSize] = useState(() => localStorage.getItem('devdrill_editor_fontsize') || '14');
+    const [contentFontSize, setContentFontSize] = useState(() => localStorage.getItem('devdrill_content_fontsize') || '15');
     const [fontFamily, setFontFamily] = useState(() => localStorage.getItem('devdrill_editor_fontfamily') || "'JetBrains Mono', monospace");
     const [tabSize, setTabSize] = useState(() => localStorage.getItem('devdrill_editor_tabsize') || '4');
     const [minimap, setMinimap] = useState(() => localStorage.getItem('devdrill_editor_minimap') === 'true');
@@ -62,13 +63,23 @@ export default function Settings() {
     const handleFontSizeChange = (sz) => {
         setFontSize(sz);
         localStorage.setItem('devdrill_editor_fontsize', sz);
+        document.documentElement.style.setProperty('--editor-font-size', `${sz}px`);
         notifySettingsChanged();
-        showSaved(`Font size set to ${sz}px`);
+        showSaved(`Editor font size set to ${sz}px`);
+    };
+
+    const handleContentFontSizeChange = (sz) => {
+        setContentFontSize(sz);
+        localStorage.setItem('devdrill_content_fontsize', sz);
+        document.documentElement.style.setProperty('--problem-font-size', `${sz}px`);
+        notifySettingsChanged();
+        showSaved(`Problem reading size set to ${sz}px`);
     };
 
     const handleFontFamilyChange = (fam) => {
         setFontFamily(fam);
         localStorage.setItem('devdrill_editor_fontfamily', fam);
+        document.documentElement.style.setProperty('--font-mono', fam);
         notifySettingsChanged();
         showSaved('Editor font family updated');
     };
@@ -377,6 +388,45 @@ export default function Settings() {
                                     </span>
                                 </button>
                             </div>
+
+                            {/* Live Code Preview Box */}
+                            <div style={{
+                                background: 'rgba(0, 0, 0, 0.25)',
+                                borderRadius: '8px',
+                                border: '1px solid var(--bg-panel-border)',
+                                padding: '0.85rem 1rem',
+                                marginTop: '0.35rem',
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                                        <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+                                        <span style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
+                                            LIVE EDITOR PREVIEW — {fontSize}px · {fontFamily.split(',')[0].replace(/'/g, '')} · Tab: {tabSize}
+                                        </span>
+                                    </div>
+                                    <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>● Instant Applied</span>
+                                </div>
+                                <div style={{
+                                    fontFamily: fontFamily,
+                                    fontSize: `${fontSize}px`,
+                                    lineHeight: 1.6,
+                                    color: 'var(--text-primary)',
+                                    background: 'var(--bg-main)',
+                                    padding: '0.85rem 1rem',
+                                    borderRadius: '6px',
+                                    border: '1px solid var(--bg-panel-border)',
+                                    overflowX: 'auto',
+                                }}>
+                                    <div><span style={{ color: '#f43f5e', fontWeight: 600 }}>def</span> <span style={{ color: '#60a5fa', fontWeight: 600 }}>twoSum</span>(nums: <span style={{ color: '#38bdf8' }}>list[int]</span>, target: <span style={{ color: '#38bdf8' }}>int</span>) -&gt; <span style={{ color: '#38bdf8' }}>list[int]</span>:</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 0.55}rem` }}><span style={{ color: 'var(--text-tertiary)' }}># Hash map lookup: O(n) runtime</span></div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 0.55}rem` }}>seen = {'{}'}</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 0.55}rem` }}><span style={{ color: '#f43f5e', fontWeight: 600 }}>for</span> i, num <span style={{ color: '#f43f5e', fontWeight: 600 }}>in</span> <span style={{ color: '#fbbf24' }}>enumerate</span>(nums):</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 1.1}rem` }}>complement = target - num</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 1.1}rem` }}><span style={{ color: '#f43f5e', fontWeight: 600 }}>if</span> complement <span style={{ color: '#f43f5e', fontWeight: 600 }}>in</span> seen:</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 1.65}rem` }}><span style={{ color: '#f43f5e', fontWeight: 600 }}>return</span> [seen[complement], i]</div>
+                                    <div style={{ paddingLeft: `${Number(tabSize) * 1.1}rem` }}>seen[num] = i</div>
+                                </div>
+                            </div>
                         </section>
 
                         {/* SECTION 2: Appearance & Theme */}
@@ -392,10 +442,11 @@ export default function Settings() {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid var(--bg-panel-border)', paddingBottom: '0.75rem' }}>
                                 <Sun size={16} color="#eab308" />
                                 <h2 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                                    Appearance & Theme
+                                    Appearance & Reading Size
                                 </h2>
                             </div>
 
+                            {/* Theme Mode */}
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div>
                                     <div style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)' }}>Theme Mode</div>
@@ -441,6 +492,57 @@ export default function Settings() {
                                         <Sun size={13} />
                                         <span>Light</span>
                                     </button>
+                                </div>
+                            </div>
+
+                            {/* Problem & Text Reading Size */}
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--bg-panel-border)', paddingTop: '1rem' }}>
+                                <div>
+                                    <div style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)' }}>Problem Reading Size</div>
+                                    <div style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)' }}>Adjust font size for problem statements, examples, and hints</div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '0.35rem' }}>
+                                    {[
+                                        { sz: '13', label: 'Compact (13px)' },
+                                        { sz: '15', label: 'Standard (15px)' },
+                                        { sz: '17', label: 'Large (17px)' },
+                                        { sz: '19', label: 'Comfort (19px)' },
+                                    ].map(({ sz, label }) => (
+                                        <button
+                                            key={sz}
+                                            onClick={() => handleContentFontSizeChange(sz)}
+                                            style={{
+                                                padding: '0.3rem 0.65rem',
+                                                borderRadius: '5px',
+                                                border: `1px solid ${contentFontSize === sz ? 'var(--accent-primary)' : 'var(--bg-panel-border)'}`,
+                                                background: contentFontSize === sz ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
+                                                color: contentFontSize === sz ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                                                fontSize: '0.76rem',
+                                                fontWeight: 600,
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            {label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Live Reading Sample Preview */}
+                            <div style={{
+                                background: 'var(--bg-main)',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '6px',
+                                border: '1px solid var(--bg-panel-border)',
+                                fontSize: `${contentFontSize}px`,
+                                color: 'var(--text-primary)',
+                                lineHeight: 1.6,
+                            }}>
+                                <div style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)', fontWeight: 600, marginBottom: '0.25rem', fontFamily: 'var(--font-mono)' }}>
+                                    PROBLEM STATEMENT PREVIEW:
+                                </div>
+                                <div>
+                                    Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.
                                 </div>
                             </div>
                         </section>
@@ -597,7 +699,7 @@ export default function Settings() {
                                     <span>{checkingUpdate ? 'Checking...' : 'Check for Updates'}</span>
                                 </button>
                                 <a
-                                    href="https://github.com/che4goud/offcode"
+                                    href="https://github.com/bilalshemsu1/dev-drill"
                                     target="_blank"
                                     rel="noreferrer"
                                     className="btn btn-secondary"

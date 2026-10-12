@@ -52,6 +52,26 @@ npm run desktop:run
 npm run desktop:build
 ```
 
+## Project Structure
+
+```text
+dev-drill/
+├── public/                 # Static assets, branding logos, icons, PWA manifest
+├── releases/               # Neutralino updater package & version manifest
+├── scripts/
+│   ├── desktop/            # Windows desktop launcher & shortcut scripts
+│   └── generators/         # Dataset builders, scrapers & icon generators
+├── src/
+│   ├── components/         # DesktopTitleBar, EditorPanel, ProblemPanel, ConsolePanel, NavRail
+│   ├── data/               # Pure JSON problem sets (NeetCode 150, Blind 75, Beginner 30)
+│   ├── pages/              # Dedicated pages (Home / Library, Editor, Stats, Settings)
+│   ├── services/           # Storage, execution & auto-updater services
+│   └── workers/            # Pyodide WASM & JavaScript execution web workers
+├── neutralino.config.json  # Native desktop window & Neutralino runtime configuration
+├── package.json            # Node.js dependencies & scripts
+└── vite.config.js          # Vite & PWA bundler configuration
+```
+
 ---
 
 ## Tech Stack

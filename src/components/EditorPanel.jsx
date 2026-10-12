@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, Check, RotateCcw, FileCode } from 'lucide-react';
 import Timer from './Timer';
@@ -27,6 +27,7 @@ export default function EditorPanel({
     onCursorChange,
 }) {
     const [settings, setSettings] = useState(getStoredEditorSettings);
+    const editorRef = useRef(null);
 
     useEffect(() => {
         const handleSettingsChanged = () => {
@@ -40,7 +41,31 @@ export default function EditorPanel({
         };
     }, []);
 
+    // Dynamically apply settings to the mounted Monaco instance immediately
+    useEffect(() => {
+        if (editorRef.current) {
+            editorRef.current.updateOptions({
+                fontSize: settings.fontSize,
+                fontFamily: settings.fontFamily,
+                tabSize: settings.tabSize,
+                minimap: { enabled: settings.minimap },
+                lineNumbers: settings.lineNumbers,
+                wordWrap: settings.wordWrap,
+            });
+            editorRef.current.layout();
+        }
+    }, [settings]);
+
     const handleEditorDidMount = (editor) => {
+        editorRef.current = editor;
+        editor.updateOptions({
+            fontSize: settings.fontSize,
+            fontFamily: settings.fontFamily,
+            tabSize: settings.tabSize,
+            minimap: { enabled: settings.minimap },
+            lineNumbers: settings.lineNumbers,
+            wordWrap: settings.wordWrap,
+        });
         editor.onDidChangeCursorPosition((e) => {
             if (onCursorChange) {
                 onCursorChange({

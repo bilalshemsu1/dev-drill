@@ -47,6 +47,9 @@
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  --editor-font-size: 14px;
+  --problem-font-size: 15px;
 }
 
 [data-theme="light"] {

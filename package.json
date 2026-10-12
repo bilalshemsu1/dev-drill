@@ -8,6 +8,7 @@
     "build": "vite build",
     "desktop:run": "npm run build && neu run",
     "desktop:build": "npm run build && neu build --release",
+    "app:launch": "powershell -ExecutionPolicy Bypass -File scripts/desktop/launch-app.ps1",
     "lint": "eslint .",
     "preview": "vite preview"
   },

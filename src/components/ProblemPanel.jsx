@@ -154,7 +154,7 @@ export default function ProblemPanel({ problem, language }) {
                         </div>
                         <div
                             className="problem-description"
-                            style={{ color: 'var(--text-primary)', fontSize: '0.93rem', lineHeight: '1.65' }}
+                            style={{ color: 'var(--text-primary)', fontSize: 'var(--problem-font-size, 15px)', lineHeight: '1.65' }}
                             dangerouslySetInnerHTML={{ __html: problem.description }}
                         />
                     </>
