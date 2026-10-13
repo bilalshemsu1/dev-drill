@@ -50,6 +50,12 @@
 
   --editor-font-size: 14px;
   --problem-font-size: 15px;
+
+  /* Custom Modern Desktop Scrollbar Tokens */
+  --scrollbar-thumb: rgba(148, 163, 184, 0.22);
+  --scrollbar-thumb-hover: rgba(148, 163, 184, 0.45);
+  --scrollbar-thumb-active: var(--accent-primary);
+  --scrollbar-track: transparent;
 }
 
 [data-theme="light"] {
@@ -66,6 +72,11 @@
   --success: #059669;
   --error: #dc2626;
   --warning: #d97706;
+
+  --scrollbar-thumb: rgba(15, 23, 42, 0.18);
+  --scrollbar-thumb-hover: rgba(15, 23, 42, 0.35);
+  --scrollbar-thumb-active: var(--accent-primary);
+  --scrollbar-track: transparent;
 }
 
 * {
@@ -113,12 +124,41 @@ body {
   background: rgba(0, 0, 0, 0.04);
 }
 
-[data-theme="light"] .panel-content::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+/* ==========================================================
+   Modern Minimalist Native Desktop Scrollbar Design
+   Sleek 6px floating pill, subtle track, elegant accent hover
+   ========================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-[data-theme="light"] .panel-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
+/* WebKit & Chromium browsers (Chrome, Edge, Neutralino WebView2) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-thumb-active);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 [data-theme="light"] .custom-select option {
